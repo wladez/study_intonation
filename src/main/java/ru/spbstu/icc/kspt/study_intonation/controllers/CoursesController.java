@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class SampleController {
+public class CoursesController {
 
     private final CoursesService coursesService;
 
