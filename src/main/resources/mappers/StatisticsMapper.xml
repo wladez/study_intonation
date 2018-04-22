@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ru.spbstu.icc.kspt.study_intonation.dao.StatisticsMapper">
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+        INSERT INTO statistics (userId, taskId, lessonId, courseId, cr, mse, mse_k) VALUES
+        <foreach item="item" collection="statistics" open="(" separator="),(" close=")">
+            #{item.userId}, #{item.taskId}, #{item.lessonId}, #{item.courseId}, #{item.cr}, #{item.mse}, #{item.mse_k}
+        </foreach>
+    </insert>
+
+</mapper>

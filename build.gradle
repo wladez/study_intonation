@@ -1,0 +1,22 @@
+group 'ru.spbstu.icc.kspt'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile("org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE")
+    compileOnly 'org.projectlombok:lombok:1.16.20'
+
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:+',
+            'com.jolbox:bonecp:+'
+
+    runtime 'com.h2database:h2:+',
+            'mysql:mysql-connector-java:6.0.5'
+}
