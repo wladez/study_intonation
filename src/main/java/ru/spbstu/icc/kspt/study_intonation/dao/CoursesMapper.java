@@ -13,7 +13,7 @@ public interface CoursesMapper {
             "FROM courses")
     @Results({@Result(property = "id", column = "ID"),
             @Result(property = "lessons", javaType = List.class, column = "ID",
-                    many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.LessonsMapper.getNonUniqueLessons"))})
+                    many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.LessonsMapper.getLessonsByCourseID"))})
     List<Course> getAll();
 
     @Select("SELECT ID FROM courses WHERE dirname=#{dirName}")
