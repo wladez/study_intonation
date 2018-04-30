@@ -98,9 +98,9 @@ CREATE UNIQUE INDEX `id_UNIQUE` ON `study_intonation`.`Users` (`id` ASC);
 -- -----------------------------------------------------
 -- Table `study_intonation`.`Statistics`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `study_intonation`.`Statistics` ;
+DROP TABLE IF EXISTS `study_intonation`.`Attempts` ;
 
-CREATE TABLE IF NOT EXISTS `study_intonation`.`Statistics` (
+CREATE TABLE IF NOT EXISTS `study_intonation`.`Attempts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `userID` INT UNSIGNED NOT NULL,
   `taskID` INT UNSIGNED NOT NULL,
@@ -110,19 +110,19 @@ CREATE TABLE IF NOT EXISTS `study_intonation`.`Statistics` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `id_UNIQUE` ON `study_intonation`.`Statistics` (`id` ASC);
+CREATE UNIQUE INDEX `id_UNIQUE` ON `study_intonation`.`Attempts` (`id` ASC);
 
-CREATE INDEX `userID_idx` ON `study_intonation`.`Statistics` (`userID` ASC);
+CREATE INDEX `userID_idx` ON `study_intonation`.`Attempts` (`userID` ASC);
 
-CREATE INDEX `taskID_idx` ON `study_intonation`.`Statistics` (`taskID` ASC);
+CREATE INDEX `taskID_idx` ON `study_intonation`.`Attempts` (`taskID` ASC);
 
-alter table statistics
-	add constraint FK_STATISTICS_USER_ID
+alter table attempts
+	add constraint FK_ATTEMPTS_USER_ID
 		foreign key (userID) references users (ID)
 			on update cascade on delete cascade;
 
-alter table statistics
-	add constraint FK_STATISTICS_TASK_ID
+alter table attempts
+	add constraint FK_ATTEMPTS_TASK_ID
 		foreign key (taskID) references tasks (ID)
 			on update cascade on delete cascade;
 -- -----------------------------------------------------

@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
-import ru.spbstu.icc.kspt.study_intonation.entities.Statistic;
+import ru.spbstu.icc.kspt.study_intonation.entities.Attempt;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import java.util.List;
 @Component
 public interface StatisticsMapper {
 
-    Long batchInsert(@Param("statistics") final List<Statistic> statistics);
+    Long batchInsert(@Param("attempts") final List<Attempt> attempts);
 
-    @Select("SELECT id, userId, taskId, lessonId, courseId, cr, mse, mse_k " +
-            "FROM statistics")
-    List<Statistic> getAll();
+    @Select("SELECT id, userId, taskId, cr, mse, mse_k " +
+            "FROM attempts")
+    List<Attempt> getAll();
 
-    @Select("SELECT id, userId, taskId, lessonId, courseId, cr, mse, mse_k " +
-            "FROM statistics WHERE userId=#{id}")
-    List<Statistic> getStatisticsByUserID(final Long id);
+    @Select("SELECT id, userId, taskId, cr, mse, mse_k " +
+            "FROM attempts WHERE userId=#{id}")
+    List<Attempt> getStatisticsByUserID(final Long id);
 
 }

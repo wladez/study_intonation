@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.spbstu.icc.kspt.study_intonation.dao.CoursesMapper;
 import ru.spbstu.icc.kspt.study_intonation.dao.StatisticsMapper;
-import ru.spbstu.icc.kspt.study_intonation.entities.Statistic;
+import ru.spbstu.icc.kspt.study_intonation.entities.Attempt;
 
 import java.util.List;
 
@@ -15,18 +15,18 @@ public class StatisticsService {
     private StatisticsMapper statisticsMapper;
     private CoursesMapper coursesMapper;
 
-    public Long batchInsert(List<Statistic> statistics) {
-        for (Statistic stat: statistics) {
-            stat.setCourseId(coursesMapper.getIdByDirName(stat.getCourseDirName()));
-        }
-        return statisticsMapper.batchInsert(statistics);
+    public Long batchInsert(List<Attempt> attempts) {
+//        for (Attempt stat: attempts) {
+//            stat.setCourseId(coursesMapper.getIdByDirName(stat.getCourseDirName()));
+//        }
+        return statisticsMapper.batchInsert(attempts);
     }
 
-    public List<Statistic> getAllStatistic() {
+    public List<Attempt> getAllStatistic() {
         return statisticsMapper.getAll();
     }
 
-    public List<Statistic> getByUserId(final Long userID) {
+    public List<Attempt> getByUserId(final Long userID) {
         return statisticsMapper.getStatisticsByUserID(userID);
     }
 

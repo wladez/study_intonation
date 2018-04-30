@@ -3,9 +3,9 @@
 <mapper namespace="ru.spbstu.icc.kspt.study_intonation.dao.StatisticsMapper">
 
     <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-        INSERT INTO statistics (userId, taskId, lessonId, courseId, cr, mse, mse_k) VALUES
-        <foreach item="item" collection="statistics" open="(" separator="),(" close=")">
-            #{item.userId}, #{item.taskId}, #{item.lessonId}, #{item.courseId}, #{item.cr}, #{item.mse}, #{item.mse_k}
+        INSERT INTO attempts (userId, taskId, cr, mse, mse_k) VALUES
+        <foreach item="item" collection="attempts" open="(" separator="),(" close=")">
+            #{item.userId}, #{item.taskId}, #{item.cr}, #{item.mse}, #{item.mse_k}
         </foreach>
     </insert>
 

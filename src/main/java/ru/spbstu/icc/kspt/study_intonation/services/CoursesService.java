@@ -30,4 +30,8 @@ public class CoursesService {
         }
         return courses;
     }
+
+    public Long create(Course course) {
+        return coursesMapper.create(course);
+    }
 }

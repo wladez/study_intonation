@@ -18,4 +18,9 @@ public interface CoursesMapper {
 
     @Select("SELECT ID FROM courses WHERE dirname=#{dirName}")
     Long getIdByDirName(final String dirName);
+
+    @Insert("INSERT INTO courses (dirname, title, description, logo, difficulty, category, releaseDate) VALUES " +
+            "(#{title}, #{description}, #{logo}, #{difficulty}, #{category}, #{releaseDate})")
+    @Options(useGeneratedKeys = true, keyColumn = "ID")
+    Long create(Course course);
 }
