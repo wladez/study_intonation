@@ -23,4 +23,12 @@ public interface TasksMapper {
             + "WHERE lesson_task.lessonID = #{id}")
     @Results({@Result(property = "id", column = "id", id = true)})
     List<Task> getTasksByLessonID(final Long id);
+
+    @Select("SELECT ID, instruction, text, pathToAudio, pitch, textMarkup FROM tasks")
+    List<Task> getAll();
+
+    @Insert("INSERT INTO tasks (instruction, text) VALUES " +
+            "(#{instruction}, #{text})")
+    @Options(useGeneratedKeys = true, keyColumn = "id")
+    Long create(final Task task);
 }
