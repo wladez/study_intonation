@@ -88,14 +88,14 @@ public class LessonsService {
     }
 
     private void updateTasks(Lesson fromDB, Set<Task> requestTasks) {
-        addTags(fromDB, requestTasks);
+        addTasks(fromDB, requestTasks);
 
-        updateExistingTags(fromDB, requestTasks);
+        updateExistingTasks(fromDB, requestTasks);
 
-        deleteQuestionTags(fromDB, requestTasks);
+        deleteLessonTasks(fromDB, requestTasks);
     }
 
-    private void addTags(Lesson fromDB, Set<Task> requestTasks) {
+    private void addTasks(Lesson fromDB, Set<Task> requestTasks) {
         final Set<Task> newTasks = new HashSet<>(requestTasks);
 
         newTasks.removeIf(task -> fromDB.getTasks().stream()
@@ -115,17 +115,16 @@ public class LessonsService {
         }
     }
 
-    private void updateExistingTags(Lesson fromDB, Set<Task> requestTasks) {
+    private void updateExistingTasks(Lesson fromDB, Set<Task> requestTasks) {
         final Set<Task> updatedTasks = new HashSet<>(requestTasks);
         updatedTasks.removeIf(reqTask -> fromDB.getTasks().stream()
                                                .noneMatch(t -> t.getId().equals(reqTask.getId())
                                                        && !t.getText().equals(reqTask.getText())));
 
-        final List<Task> allTagsFromDB = tasksMapper.getAll();
         updatedTasks.forEach(taskForUpdate -> tasksMapper.update(taskForUpdate));
     }
 
-    private void deleteQuestionTags(Lesson fromDB, Set<Task> requestTasks) {
+    private void deleteLessonTasks(Lesson fromDB, Set<Task> requestTasks) {
         final Set<Task> deletedTasks = new HashSet<>(fromDB.getTasks());
 
         deletedTasks.removeIf(delTask -> requestTasks.stream()

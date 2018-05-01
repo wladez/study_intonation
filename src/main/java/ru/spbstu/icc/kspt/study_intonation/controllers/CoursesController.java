@@ -23,6 +23,11 @@ public class CoursesController {
         return coursesService.showAll();
     }
 
+    @GetMapping(Methods.ID_PATTERN)
+    public Course get(@PathVariable final Long id) {
+        return coursesService.getById(id);
+    }
+
     @PostMapping
     public Long create(@RequestBody final Course course) {
         return coursesService.create(course);
