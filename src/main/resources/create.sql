@@ -63,7 +63,6 @@ DROP TABLE IF EXISTS `study_intonation`.`Lessons` ;
 
 CREATE TABLE IF NOT EXISTS `study_intonation`.`Lessons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `courseID` INT UNSIGNED NOT NULL,
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(250) NULL,
   `shortDescription` VARCHAR(45) NULL,
@@ -72,14 +71,8 @@ CREATE TABLE IF NOT EXISTS `study_intonation`.`Lessons` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE INDEX `courseID_idx` ON `study_intonation`.`Lessons` (`courseID` ASC);
-
 CREATE UNIQUE INDEX `id_UNIQUE` ON `study_intonation`.`Lessons` (`id` ASC);
 
-alter table lessons
-	add constraint FK_LESSONS_COURSE_ID
-		foreign key (courseID) references courses (ID)
-			on update cascade on delete cascade;
 -- -----------------------------------------------------
 -- Table `study_intonation`.`Users`
 -- -----------------------------------------------------
@@ -148,6 +141,31 @@ alter table lesson_task
 alter table lesson_task
     add constraint LESSONTASK_TASK_ID_FK
 		foreign key (taskID) references tasks (ID)
+			on update cascade on delete cascade;
+
+-- -----------------------------------------------------
+-- Table `study_intonation`.`course_lesson`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `study_intonation`.`course_lesson` ;
+
+CREATE TABLE IF NOT EXISTS `study_intonation`.`course_lesson` (
+  `courseID` INT UNSIGNED NOT NULL,
+  `lessonID` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`courseID`, `lessonID`))
+ENGINE = InnoDB;
+
+CREATE INDEX `lessonID_idx` ON `study_intonation`.`course_lesson` (`lessonID` ASC);
+
+CREATE INDEX `courseID_idx` ON `study_intonation`.`course_lesson` (`courseID` ASC);
+
+alter table course_lesson
+	add constraint COURSELESSON_LESSON_ID_FK
+		foreign key (lessonID) references lessons (ID)
+			on update cascade on delete cascade;
+
+alter table course_lesson
+    add constraint COURSELESSON_COURSE_ID_FK
+		foreign key (courseID) references courses (ID)
 			on update cascade on delete cascade;
 
 SET SQL_MODE=@OLD_SQL_MODE;

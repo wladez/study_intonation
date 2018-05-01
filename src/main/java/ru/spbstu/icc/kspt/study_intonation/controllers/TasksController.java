@@ -3,6 +3,7 @@ package ru.spbstu.icc.kspt.study_intonation.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.spbstu.icc.kspt.study_intonation.common.Methods;
 import ru.spbstu.icc.kspt.study_intonation.common.Paths;
 import ru.spbstu.icc.kspt.study_intonation.entities.Task;
 import ru.spbstu.icc.kspt.study_intonation.services.TasksService;
@@ -24,5 +25,11 @@ public class TasksController {
     @GetMapping
     public List<Task> getAll() {
         return tasksService.getAll();
+    }
+
+    @PutMapping(Methods.ID_PATTERN)
+    public Task update(@PathVariable final Long id, @RequestBody final Task task) {
+        task.setId(id);
+        return tasksService.update(task);
     }
 }

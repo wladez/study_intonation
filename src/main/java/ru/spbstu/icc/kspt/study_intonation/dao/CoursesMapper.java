@@ -19,8 +19,14 @@ public interface CoursesMapper {
     @Select("SELECT ID FROM courses WHERE dirname=#{dirName}")
     Long getIdByDirName(final String dirName);
 
-    @Insert("INSERT INTO courses (dirname, title, description, logo, difficulty, category, releaseDate) VALUES " +
+    @Insert("INSERT INTO courses (title, description, logo, difficulty, category, releaseDate) VALUES " +
             "(#{title}, #{description}, #{logo}, #{difficulty}, #{category}, #{releaseDate})")
     @Options(useGeneratedKeys = true, keyColumn = "ID")
-    Long create(Course course);
+    Long create(final Course course);
+
+    @Update("UPDATE courses " +
+            "SET title = #{title}, description = #{description}, difficulty = #{difficulty}, category = #{category}, " +
+            "releaseDate = #{releaseDate}, logo = #{logo} " +
+            "WHERE id = #{id}")
+    Boolean update(final Course course);
 }

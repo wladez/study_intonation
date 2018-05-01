@@ -7,18 +7,27 @@ INSERT INTO courses VALUES
 (2, 'CrashCourse', 'Crash Course', 'Meet the principle tones of English. Learn to produce them when speaking. Starting with quite short common phrases you will browse through a variety of speaking patterns to feel and train the melody of English speech',
 'logo.png', 1, 'Example', '18.02.2017');
 
-INSERT INTO lessons (id, courseID, title, description, logo, duration) VALUES
-(1, 1, 'Everyday discourse', 'Lets start from the very beginning. Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune looking at the pitch as if you sing a song. This warm-up will help you to get along with Study Intonation. Good luck!',
+INSERT INTO lessons (id, title, description, logo, duration) VALUES
+(1, 'Everyday discourse', 'Lets start from the very beginning. Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune looking at the pitch as if you sing a song. This warm-up will help you to get along with Study Intonation. Good luck!',
 '01EverydayDiscourse/logo.png', 25),
-(2, 1, 'Invitations. Make-Accept-Decline', 'Remember: Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune, looking at the pitch as if you sing a song. Keep to the melody and tempo of the speech',
+(2, 'Invitations. Make-Accept-Decline', 'Remember: Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune, looking at the pitch as if you sing a song. Keep to the melody and tempo of the speech',
 '02Invitations/logo.png', 15),
-(3, 1, 'Show Your Emotions', 'Remember: Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune, looking at the pitch as if you sing a song. Keep to the melody and tempo of the speech',
+(3, 'Show Your Emotions', 'Remember: Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune, looking at the pitch as if you sing a song. Keep to the melody and tempo of the speech',
 '03Emotions/logo.png', 15),
-(4, 1, 'Speaking in academic context', 'Remember: Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune, looking at the pitch as if you sing a song. Keep to the melody and tempo of the speech',
+(4, 'Speaking in academic context', 'Remember: Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune, looking at the pitch as if you sing a song. Keep to the melody and tempo of the speech',
 '04AcademicContext/logo.png', 15),
-(5, 2, 'Разогрев', 'Небольшая разминка перед началом курса', '01/logo.png', 10),
-(6, 2, 'Тренировка интонации', 'Пора взяться за дело', '02/logo.png', 15),
-(7, 2, 'Берем вес', 'Пришло время испытать триумф', '03/logo.png', 53);
+(5, 'Разогрев', 'Небольшая разминка перед началом курса', '01/logo.png', 10),
+(6, 'Тренировка интонации', 'Пора взяться за дело', '02/logo.png', 15),
+(7, 'Берем вес', 'Пришло время испытать триумф', '03/logo.png', 53);
+
+INSERT INTO course_lesson (courseID, lessonID) VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(2,5),
+(2,6),
+(2,7);
 
 INSERT INTO tasks (instruction, text, pathToAudio, pitch, textMarkup) VALUES
 ('We start speaking with greetings', 'Hello!', '01EverydayDiscourse/l1t1.mp3', '01EverydayDiscourse/l1t1.pitch', '01EverydayDiscourse/l1t1.text'),
@@ -194,8 +203,3 @@ INSERT INTO lesson_task (lessonId, taskId) VALUES
 (7, 81),
 (7, 82),
 (7, 83);
-
-
-
-
-

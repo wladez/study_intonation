@@ -3,6 +3,7 @@ package ru.spbstu.icc.kspt.study_intonation.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.spbstu.icc.kspt.study_intonation.common.Methods;
 import ru.spbstu.icc.kspt.study_intonation.common.Paths;
 import ru.spbstu.icc.kspt.study_intonation.entities.Course;
 import ru.spbstu.icc.kspt.study_intonation.services.CoursesService;
@@ -25,6 +26,12 @@ public class CoursesController {
     @PostMapping
     public Long create(@RequestBody final Course course) {
         return coursesService.create(course);
+    }
+
+    @PutMapping(Methods.ID_PATTERN)
+    public Course update(@PathVariable final Long id, @RequestBody final Course course) {
+        course.setId(id);
+        return coursesService.update(course);
     }
 
 }
