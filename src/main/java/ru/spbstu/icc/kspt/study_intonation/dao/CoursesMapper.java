@@ -53,4 +53,7 @@ public interface CoursesMapper {
             @Param("courseID") final Long courseID,
             @Param("lessonID") final Long lessonID
     );
+
+    @Delete("DELETE FROM courses WHERE id = #{id}")
+    Boolean delete(final Long id);
 }

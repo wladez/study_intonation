@@ -35,6 +35,19 @@ public class TasksService {
 
         else throw new RuntimeException("Update failed");
 
-
     }
+
+    public Task getById(final Long id) {
+        return tasksMapper.get(id);
+    }
+
+    public void delete(final Long id) {
+        if (!ValidationUtility.isValidId(id))
+            throw new RuntimeException("Invalid taskID for deleting!");
+
+        if (!tasksMapper.delete(id)) {
+            throw new RuntimeException("Task not found!");
+        }
+    }
+
 }

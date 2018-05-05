@@ -47,6 +47,20 @@ public class CoursesService {
         return coursesMapper.create(course);
     }
 
+    public void delete(final Long id) {
+        if (!ValidationUtility.isValidId(id))
+            throw new RuntimeException("Invalid courseID for deleting!");
+
+        List<Lesson> lessons = lessonsService.getAllByCourseID(id);
+
+        if (!coursesMapper.delete(id)) {
+            throw new RuntimeException("Course not found!");
+        }
+        else {
+            lessons.forEach(lesson -> coursesMapper.removeLessonFromCourse(id,lesson.getId()));
+        }
+    }
+
     public Course update(final Course course) {
         if (ValidationUtility.isEmpty(course))
             throw new RuntimeException("Course is not specified");

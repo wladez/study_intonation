@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `study_intonation`.`Tasks` (
   `pathToAudio` VARCHAR(45) NULL,
   `pitch` VARCHAR(45) NULL,
   `textMarkup` VARCHAR(45) NULL,
+  `deleted` BIT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -68,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `study_intonation`.`Lessons` (
   `shortDescription` VARCHAR(45) NULL,
   `logo` VARCHAR(45) NULL,
   `duration` INT NULL,
+  `deleted` BIT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

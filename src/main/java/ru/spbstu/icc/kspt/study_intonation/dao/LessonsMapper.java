@@ -62,4 +62,7 @@ public interface LessonsMapper {
             "duration = #{duration}, logo = #{logo} " +
             "WHERE id = #{id}")
     Boolean update(final Lesson lesson);
+
+    @Update("UPDATE lessons SET deleted = 1 WHERE ID = #{id}")
+    Boolean delete(final Long id);
 }

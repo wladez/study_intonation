@@ -36,4 +36,9 @@ public class LessonsController {
         lesson.setId(id);
         return lessonsService.update(lesson);
     }
+
+    @DeleteMapping(Methods.ID_PATTERN)
+    public void delete(@PathVariable final  Long id) {
+        lessonsService.delete(id);
+    }
 }

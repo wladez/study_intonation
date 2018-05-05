@@ -39,4 +39,9 @@ public class CoursesController {
         return coursesService.update(course);
     }
 
+    @DeleteMapping(Methods.ID_PATTERN)
+    public void delete(@PathVariable final Long id) {
+        coursesService.delete(id);
+    }
+
 }
