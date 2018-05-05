@@ -35,9 +35,9 @@ public interface TasksMapper {
     Task get(final Long id);
 
     @Insert("INSERT INTO tasks (instruction, text) VALUES " +
-            "(#{instruction}, #{text})")
-    @Options(useGeneratedKeys = true, keyColumn = "id")
-    Long create(final Task task);
+            "(#{task.instruction}, #{task.text})")
+    @Options(useGeneratedKeys = true, keyProperty="task.id", keyColumn = "id")
+    Long create(@Param("task") final Task task);
 
     @Update("UPDATE tasks " +
             "SET instruction = #{instruction}, text = #{text} " +

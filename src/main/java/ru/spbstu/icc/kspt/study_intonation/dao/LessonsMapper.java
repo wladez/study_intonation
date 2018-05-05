@@ -53,9 +53,9 @@ public interface LessonsMapper {
     );
 
     @Insert("INSERT INTO lessons (title, description, shortDescription, duration, logo) VALUES " +
-            "(#{title}, #{description}, #{shortDescription}, #{duration}, #{logo})")
-    @Options(useGeneratedKeys = true, keyColumn = "id")
-    Long create(final Lesson lesson);
+            "(#{lesson.title}, #{lesson.description}, #{lesson.shortDescription}, #{lesson.duration}, #{lesson.logo})")
+    @Options(useGeneratedKeys = true, keyProperty="lesson.id", keyColumn = "id")
+    Long create(@Param("lesson") final Lesson lesson);
 
     @Update("UPDATE lessons " +
             "SET title = #{title}, description = #{description}, shortDescription = #{shortDescription}, " +

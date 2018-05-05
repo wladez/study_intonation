@@ -27,9 +27,10 @@ public interface CoursesMapper {
     Long getIdByDirName(final String dirName);
 
     @Insert("INSERT INTO courses (title, description, logo, difficulty, category, releaseDate) VALUES " +
-            "(#{title}, #{description}, #{logo}, #{difficulty}, #{category}, #{releaseDate})")
-    @Options(useGeneratedKeys = true, keyColumn = "ID")
-    Long create(final Course course);
+            "(#{course.title}, #{course.description}, #{course.logo}, #{course.difficulty}, " +
+            "#{course.category}, #{course.releaseDate})")
+    @Options(useGeneratedKeys = true, keyProperty="course.id", keyColumn = "ID")
+    Long create(@Param("course") final Course course);
 
     @Update("UPDATE courses " +
             "SET title = #{title}, description = #{description}, difficulty = #{difficulty}, category = #{category}, " +

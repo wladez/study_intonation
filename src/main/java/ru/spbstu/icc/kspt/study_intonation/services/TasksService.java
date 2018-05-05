@@ -15,7 +15,8 @@ public class TasksService {
     private TasksMapper tasksMapper;
 
     public Long create(final Task task) {
-        return tasksMapper.create(task);
+        tasksMapper.create(task);
+        return task.getId();
     }
 
     public List<Task> getAll() {

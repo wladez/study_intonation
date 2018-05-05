@@ -28,7 +28,8 @@ public class LessonsService {
     }
 
     public Long create(final Lesson lesson) {
-        return lessonsMapper.create(lesson);
+        lessonsMapper.create(lesson);
+        return lesson.getId();
     }
 
     public Lesson update(final Lesson lesson) {

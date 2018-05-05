@@ -44,7 +44,8 @@ public class CoursesService {
     }
 
     public Long create(final Course course) {
-        return coursesMapper.create(course);
+        coursesMapper.create(course);
+        return course.getId();
     }
 
     public void delete(final Long id) {
