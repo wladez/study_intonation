@@ -34,10 +34,9 @@ public final class ValidationUtility {
         return list.contains(null);
     }
 
-    public static boolean isValidImage(final MultipartFile file) {
-        return (file.getContentType().equals("image/jpeg")
-                || file.getContentType().equals("image/png")
-                || file.getContentType().equals("image/gif"));
+    public static boolean isValidAudio(final MultipartFile file) {
+        return (file.getContentType().equals("audio/mpeg")
+                || file.getContentType().equals("audio/wave"));
     }
 
     public static <T> Optional<T> get(final T o) {

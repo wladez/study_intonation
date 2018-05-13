@@ -3,6 +3,7 @@ package ru.spbstu.icc.kspt.study_intonation.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.spbstu.icc.kspt.study_intonation.common.Methods;
 import ru.spbstu.icc.kspt.study_intonation.common.Paths;
 import ru.spbstu.icc.kspt.study_intonation.entities.Task;
@@ -41,5 +42,10 @@ public class TasksController {
     @DeleteMapping(Methods.ID_PATTERN)
     public void delete(@PathVariable final Long id) {
         tasksService.delete(id);
+    }
+
+    @PostMapping(Methods.ID_PATTERN+Methods.UPLOAD_AUDIO)
+    public void uploadAudio(@PathVariable final Long id, @RequestBody MultipartFile file) {
+        tasksService.uploadAudio(file, id);
     }
 }

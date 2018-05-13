@@ -44,6 +44,14 @@ public interface TasksMapper {
             "WHERE id = #{id}")
     Boolean update(final Task task);
 
+    @Update("UPDATE tasks " +
+            "SET pathToAudio = #{path} WHERE id = #{id}")
+    Boolean setAudio(@Param("path") final String path, @Param("id") final Long id);
+
+    @Update("UPDATE tasks " +
+            "SET pitch = #{path} WHERE id = #{id}")
+    Boolean setPitch(@Param("path") final String path, @Param("id") final Long id);
+
     @Update("UPDATE tasks SET deleted = 1 WHERE ID = #{id}")
     Boolean delete(final Long id);
 }

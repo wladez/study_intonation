@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile("org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE")
+    compile files('libs/TarsosDSP-2.3.jar')
     compileOnly 'org.projectlombok:lombok:1.16.20'
 
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:+',

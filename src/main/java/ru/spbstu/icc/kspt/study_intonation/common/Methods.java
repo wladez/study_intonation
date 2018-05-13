@@ -10,4 +10,7 @@ public final class Methods {
 
     /*User methods*/
     public static final String USER_ID_PATTERN = "/{userId}";
+
+    /*Tasks methods*/
+    public static final String UPLOAD_AUDIO = "/uploadAudio";
 }
