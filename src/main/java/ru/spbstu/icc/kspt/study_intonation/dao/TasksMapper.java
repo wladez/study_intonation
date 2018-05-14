@@ -52,6 +52,10 @@ public interface TasksMapper {
             "SET pitch = #{path} WHERE id = #{id}")
     Boolean setPitch(@Param("path") final String path, @Param("id") final Long id);
 
+    @Update("UPDATE tasks " +
+            "SET textMarkup = #{path} WHERE id = #{id}")
+    Boolean setTextMarkup(@Param("path") final String path, @Param("id") final Long id);
+
     @Update("UPDATE tasks SET deleted = 1 WHERE ID = #{id}")
     Boolean delete(final Long id);
 }

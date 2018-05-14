@@ -140,5 +140,7 @@ public class TasksService {
             e.printStackTrace();
         }
 
+        tasksMapper.setTextMarkup(filename, id);
+
     }
 }
