@@ -12,12 +12,7 @@ import ru.spbstu.icc.kspt.study_intonation.utilities.PitchDetector;
 import ru.spbstu.icc.kspt.study_intonation.utilities.ValidationUtility;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.*;
 import java.util.Formatter;
 import java.util.List;
 
@@ -63,7 +58,10 @@ public class TasksService {
         }
     }
 
-    public void uploadAudio(MultipartFile file, Long id) {
+    public void uploadAudio(final Long id, final MultipartFile file) {
+        if (!ValidationUtility.isValidId(id))
+            throw new RuntimeException("Invalid taskID for adding audio!");
+
         if (file != null) {
             if (file.isEmpty())
                 throw new IllegalArgumentException("Incorrect file");
@@ -73,11 +71,11 @@ public class TasksService {
 
 //        File resourcesDirectory = new File("src/main/resources/tasks");
 
-        String path = "tasks/"+id+".mp3";
+        String path = "tasks/" + id + ".mp3";
 
 //        System.out.println(path);
 
-        File toSave = new File(Paths.RESOURCE_DIRECTORY.getAbsolutePath()+"/"+path);
+        File toSave = new File(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + path);
 
         try {
             file.transferTo(toSave);
@@ -88,25 +86,25 @@ public class TasksService {
         tasksMapper.setAudio(path, id);
 
         try {
-            generatePitch(path, id);
+            generatePitch(id, path);
         } catch (IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void generatePitch(final String filename, final Long id) throws IOException, UnsupportedAudioFileException {
+    private void generatePitch(final Long id, final String filename) throws IOException, UnsupportedAudioFileException {
         PitchDetector detector = new PitchDetector();
         List<Pitch> pitches = detector.process(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename);
 
         System.out.println(pitches.size() + " pitches was found");
 
-        printToFile(pitches, getPitchFilename(filename));
+        printPitchToFile(pitches, getPitchFilename(filename));
 
         tasksMapper.setPitch(getPitchFilename(filename), id);
     }
 
-    private static void printToFile(List<Pitch> pitches, String filename) {
+    private static void printPitchToFile(final List<Pitch> pitches, final String filename) {
         try {
             Formatter output = new Formatter(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename, "UTF-8");
 
@@ -121,8 +119,26 @@ public class TasksService {
         System.out.println("Saved to file " + filename);
     }
 
-    private static String getPitchFilename(String filename) {
+    private static String getPitchFilename(final String filename) {
         String[] tokens = filename.split("\\.(?=[^\\.]+$)");
         return tokens[0] + ".pitch";
+    }
+
+    public void uploadMarkup(final Long id, final String string) {
+        if (!ValidationUtility.isValidId(id))
+            throw new RuntimeException("Invalid taskID for adding text markup!");
+
+        if (ValidationUtility.isEmpty(string))
+            throw new RuntimeException("No content for markup");
+
+        String filename = "tasks/" + id + ".text";
+
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename))) {
+            writer.write(string);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

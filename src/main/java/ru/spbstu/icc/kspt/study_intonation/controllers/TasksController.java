@@ -46,6 +46,11 @@ public class TasksController {
 
     @PostMapping(Methods.ID_PATTERN+Methods.UPLOAD_AUDIO)
     public void uploadAudio(@PathVariable final Long id, @RequestBody MultipartFile file) {
-        tasksService.uploadAudio(file, id);
+        tasksService.uploadAudio(id, file);
+    }
+
+    @PostMapping(Methods.ID_PATTERN+Methods.UPLOAD_MARKUP)
+    public void uploadMarkup(@PathVariable final Long id, @RequestBody String string) {
+        tasksService.uploadMarkup(id, string);
     }
 }
