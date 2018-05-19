@@ -68,6 +68,15 @@ public class CoursesService {
         return tryUpdate(course);
     }
 
+    public boolean setAvailable(final Long courseID, boolean status) {
+        return coursesMapper.setAvailable(courseID, status);
+    }
+
+
+    public List<Course> getAvailableCourses() {
+        return coursesMapper.getAvailableCourses();
+    }
+
     private Course tryUpdate(final Course fromReq) {
         if (!ValidationUtility.isValidId(fromReq.getId())) {
             throw new RuntimeException("Course id is invalid");

@@ -3,9 +3,9 @@ INSERT INTO users VALUES
 
 INSERT INTO courses VALUES
 (1, 'StudyIntonation', 'Study Intonation', 'This course is for everyday discourse skills mastering. Starting with quite short phrases you will browse through a variety of speaking patterns to feel and train the melody of English speech. Learn to produce intonation \"in tune\" when speaking.',
-'logo.png', 2, 'Everyday discourse', '18.02.2017'),
+'logo.png', 2, 'Everyday discourse', '18.02.2017', 1),
 (2, 'CrashCourse', 'Crash Course', 'Meet the principle tones of English. Learn to produce them when speaking. Starting with quite short common phrases you will browse through a variety of speaking patterns to feel and train the melody of English speech',
-'logo.png', 1, 'Example', '18.02.2017');
+'logo.png', 1, 'Example', '18.02.2017', 1);
 
 INSERT INTO lessons (id, title, description, logo, duration) VALUES
 (1, 'Everyday discourse', 'Lets start from the very beginning. Listen to the pattern, observe the pitch curve and try to repeat the phrase in tune looking at the pitch as if you sing a song. This warm-up will help you to get along with Study Intonation. Good luck!',

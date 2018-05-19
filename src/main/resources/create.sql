@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `study_intonation`.`Courses` (
   `difficulty` INT NULL,
   `category` VARCHAR(45) NULL,
   `releaseDate` VARCHAR(45) NULL,
+  `available` BIT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

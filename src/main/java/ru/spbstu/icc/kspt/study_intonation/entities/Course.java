@@ -15,4 +15,5 @@ public class Course {
     private String releaseDate;
     private String logo;
     private List<Lesson> lessons = new ArrayList<>();
+    boolean available;
 }

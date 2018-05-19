@@ -39,6 +39,11 @@ public class CoursesController {
         return coursesService.update(course);
     }
 
+    @PutMapping(Methods.ID_PATTERN+Methods.AVAILABLE)
+    public void setAvailable(@PathVariable final Long id, @RequestParam("status") boolean status){
+        coursesService.setAvailable(id, status);
+    }
+
     @DeleteMapping(Methods.ID_PATTERN)
     public void delete(@PathVariable final Long id) {
         coursesService.delete(id);

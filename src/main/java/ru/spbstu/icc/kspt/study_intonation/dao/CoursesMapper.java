@@ -9,14 +9,21 @@ import java.util.List;
 @Mapper
 @Component
 public interface CoursesMapper {
-    @Select("SELECT ID, title, description, difficulty, category, releaseDate, logo " +
+    @Select("SELECT ID, title, description, difficulty, category, releaseDate, logo, available " +
             "FROM courses")
     @Results({@Result(property = "id", column = "ID"),
             @Result(property = "lessons", javaType = List.class, column = "ID",
                     many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.LessonsMapper.getLessonsByCourseID"))})
     List<Course> getAll();
 
-    @Select("SELECT ID, title, description, difficulty, category, releaseDate, logo " +
+    @Select("SELECT ID, title, description, difficulty, category, releaseDate, logo, available " +
+            "FROM courses WHERE available = 1")
+    @Results({@Result(property = "id", column = "ID"),
+            @Result(property = "lessons", javaType = List.class, column = "ID",
+                    many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.LessonsMapper.getLessonsByCourseID"))})
+    List<Course> getAvailableCourses();
+
+    @Select("SELECT ID, title, description, difficulty, category, releaseDate, logo, available " +
             "FROM courses WHERE id = #{courseID}")
     @Results({@Result(property = "id", column = "ID"),
             @Result(property = "lessons", javaType = List.class, column = "ID",
@@ -37,6 +44,11 @@ public interface CoursesMapper {
             "releaseDate = #{releaseDate}, logo = #{logo} " +
             "WHERE id = #{id}")
     Boolean update(final Course course);
+
+    @Update("UPDATE courses " +
+            "SET available = #{status} " +
+            "WHERE id = #{courseID}")
+    Boolean setAvailable(@Param("courseID") final Long courseID, @Param("status") boolean status);
 
     @Insert("INSERT INTO course_lesson (courseID, lessonID) " +
             "VALUES (#{courseID}, #{lessonID})")

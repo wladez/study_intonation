@@ -11,6 +11,12 @@ public final class Methods {
     /*User methods*/
     public static final String USER_ID_PATTERN = "/{userId}";
 
+    /*Mobile methods*/
+    public static final String GET_AVAILABLE_COURSES = "/availableCourses";
+
+    /*Courses methods*/
+    public static final String AVAILABLE = "/available";
+
     /*Tasks methods*/
     public static final String UPLOAD_AUDIO = "/uploadAudio";
     public static final String UPLOAD_MARKUP = "/uploadMarkup";
