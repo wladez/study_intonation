@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PitchDetector implements PitchDetectionHandler {
-    public static final int SAMPLE_RATE = 22050;
-    public static final int BUFFER_SIZE = 384;
-    public static final int BUFFER_OVERLAP = 0;
+    private static final int SAMPLE_RATE = 22050;
+    private static final int BUFFER_SIZE = 384;
+    private static final int BUFFER_OVERLAP = 0;
 
 
     private List<Pitch> pitches = new ArrayList<>();
