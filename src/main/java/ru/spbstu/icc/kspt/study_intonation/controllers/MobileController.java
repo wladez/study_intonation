@@ -29,4 +29,9 @@ public class MobileController {
     public List<Course> getAvailableCourses(){
         return coursesService.getAvailableCourses();
     }
+
+    @GetMapping(Methods.GET_ATTEMPTS)
+    public List<Attempt> getAttempts(){
+        return statisticsService.getByUserId(1L);
+    }
 }

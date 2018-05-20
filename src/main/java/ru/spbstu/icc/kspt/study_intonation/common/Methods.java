@@ -13,6 +13,7 @@ public final class Methods {
 
     /*Mobile methods*/
     public static final String GET_AVAILABLE_COURSES = "/availableCourses";
+    public static final String GET_ATTEMPTS = "/getUserAttempts";
 
     /*Courses methods*/
     public static final String AVAILABLE = "/available";
