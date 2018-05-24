@@ -17,7 +17,7 @@ public class StatisticsService {
 
     public Long batchInsert(List<Attempt> attempts) {
 //        for (Attempt stat: attempts) {
-//            stat.setCourseId(coursesMapper.getIdByDirName(stat.getCourseDirName()));
+//            stat.setCourseId(coursesMapper.getIdByDirName(stat.getCourseDir()));
 //        }
         return statisticsMapper.batchInsert(attempts);
     }
