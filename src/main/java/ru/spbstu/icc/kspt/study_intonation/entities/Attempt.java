@@ -7,6 +7,7 @@ public class Attempt {
     private Long id;
     private Long userId;
     private Long taskId;
+    private Long lessonId;
     private String courseDirName;
     private Double cr;
     private Double mse;

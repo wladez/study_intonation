@@ -115,9 +115,9 @@ INSERT INTO tasks (instruction, text, pathToAudio, pitch, textMarkup) VALUES
 ("Повторяй интонацию за диктором и тогда сможешь через некоторое время научиться интонационному выделению в английском языке", "It is not really even about programming", '03/04.mp3', '03/04.pitch', '03/04.text');
 
 
-INSERT INTO attempts (userID, taskID, CR, MSE, MSE_K) VALUES
-(1, 1, 0.9383049731363056, 0.216269624259154, 0.0),
-(1, 6, 0.5024464699344476, 0.46669016728026075, 0.6065457552778359);
+INSERT INTO attempts (userID, taskID, lessonID, courseDir, CR, MSE, MSE_K) VALUES
+(1, 1, 1, 'StudyIntonation', 0.9383049731363056, 0.216269624259154, 0.0),
+(1, 6, 1, 'StudyIntonation', 0.5024464699344476, 0.46669016728026075, 0.6065457552778359);
 
 INSERT INTO lesson_task (lessonId, taskId) VALUES
 (1, 1),

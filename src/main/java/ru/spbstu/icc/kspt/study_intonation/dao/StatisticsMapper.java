@@ -14,11 +14,11 @@ public interface StatisticsMapper {
 
     Long batchInsert(@Param("attempts") final List<Attempt> attempts);
 
-    @Select("SELECT id, userId, taskId, cr, mse, mse_k " +
+    @Select("SELECT id, userId, taskId, lessonId, courseDir, cr, mse, mse_k " +
             "FROM attempts")
     List<Attempt> getAll();
 
-    @Select("SELECT id, userId, taskId, cr, mse, mse_k " +
+    @Select("SELECT id, userId, taskId, lessonId, courseDir, cr, mse, mse_k " +
             "FROM attempts WHERE userId=#{id}")
     List<Attempt> getStatisticsByUserID(final Long id);
 
