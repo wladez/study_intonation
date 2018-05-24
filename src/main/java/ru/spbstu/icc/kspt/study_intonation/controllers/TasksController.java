@@ -12,6 +12,7 @@ import ru.spbstu.icc.kspt.study_intonation.services.TasksService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = Paths.TASKS)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TasksController {

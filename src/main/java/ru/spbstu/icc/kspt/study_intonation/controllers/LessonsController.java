@@ -11,6 +11,7 @@ import ru.spbstu.icc.kspt.study_intonation.services.LessonsService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = Paths.LESSONS)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class LessonsController {
