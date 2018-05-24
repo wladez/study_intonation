@@ -11,6 +11,13 @@ build/
 log/
 out/
 
+
+# FRONT
+node_modules/
+
+# macOS
+.DS_Store
+
 # BlueJ files
 *.ctxt
 
