@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import lessonModel from "../../models/LessonModel";
+import { CollapsibleItem } from '../Common/CollapsibleItem';
+import lessonModel from '../../models/LessonModel';
 import Lesson from '../Lesson/Lesson';
 
 @inject('history')
@@ -11,21 +12,18 @@ class Lessons extends Component {
     lessonModel.fetchAll();
   }
 
-  lessonMapper = lessons => {
-    return (
-      <li
-        key={`lessonsId-${lessons.id}`}
-        id={lessons.id}
-        onClick={this.handleLessonClick}
-      >{lessons.title}
-      </li>
-    )
-  };
+  lessonMapper = lesson => (
+    <CollapsibleItem
+      key={`lessonId-${lesson.id}`}
+      entity={lesson}
+      target='tasks'
+      onClick={this.onClickTaskOfLesson} />
+  );
 
-  handleLessonClick = e => {
+  onClickTaskOfLesson = e => {
     e.preventDefault();
     const { id } = e.target;
-    this.props.history.push(`/lessons/${id}`);
+    this.props.history.push(`/tasks/${id}`);
   };
 
   getLessonNumber = () => {
@@ -41,23 +39,15 @@ class Lessons extends Component {
   renderList = () => {
     const { lessons } = lessonModel;
     return (
-      <div>
-        <div className="container" id="inbox-head">
+      <div className='container'>
+        <div id='inbox-head'>
           <h2>Followed lessons:</h2>
         </div>
-        <div className="container" id="inbox-list">
-          <ul>
-            {
-              lessons.map(this.lessonMapper)
-            }
-          </ul>
+        <div id='inbox-list'>
+          {lessons.map(this.lessonMapper)}
         </div>
       </div>
     );
-  };
-
-  renderParticularLesson = lessonNumber => {
-    return <Lesson lessonNumber={lessonNumber} />
   };
 
   render() {

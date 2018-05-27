@@ -164,7 +164,7 @@ class Common extends Component {
                 <nav className="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
                     <div className="container">
                         <a className="navbar-brand text-light" href='/'>
-                            <img src='images/mailcat.png' id="logo" className="d-inline-block align-middle" alt="" />
+                            <img src='images/si_logo.jpg' id="logo" className="d-inline-block align-middle" alt="" />
                             StudyIntonation
                         </a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar7">
