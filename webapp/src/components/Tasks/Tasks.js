@@ -14,6 +14,7 @@ class Tasks extends Component {
   taskMapper = tasks => {
     return (
       <li
+        className='link'
         key={`taskId-${tasks.id}`}
         id={tasks.id}
         onClick={this.handleTaskClick}

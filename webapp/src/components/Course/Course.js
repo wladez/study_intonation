@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { isEmpty } from 'ramda';
 import courseModel from '../../models/CourseModel';
+import './Course.css';
 
 @observer
 class Course extends Component {
+
+  state = {
+    editMode: false
+  };
 
   componentWillMount() {
     const { courseId } = this.props.match.params;
