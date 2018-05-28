@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public interface LessonsMapper {
 
-    @Select("SELECT ID, title, description, shortDescription, duration, logo " +
+    @Select("SELECT ID, title, description, shortDescription, duration, logo, deleted " +
             "FROM lessons " +
             "JOIN course_lesson ON lessons.id=course_lesson.lessonID " +
             "WHERE course_lesson.courseID = #{id}")
@@ -19,17 +19,17 @@ public interface LessonsMapper {
                     many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper.getTasksByLessonID"))})
     List<Lesson> getLessonsByCourseID(final Long id);
 
-    @Select("SELECT ID, courseID, title, description, shortDescription, duration, logo " +
+    @Select("SELECT ID, courseID, title, description, shortDescription, duration, logo,deleted " +
             "FROM lessons WHERE courseID = #{id}")
     List<Lesson> getNonUniqueLessons(final Long id);
 
-    @Select("SELECT ID, title, description, shortDescription, duration, logo FROM lessons")
+    @Select("SELECT ID, title, description, shortDescription, duration, logo, deleted FROM lessons")
     @Results({@Result(property = "id", column = "ID"),
             @Result(property = "tasks", javaType = List.class, column = "ID",
                     many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper.getTasksByLessonID"))})
     List<Lesson> getAll();
 
-    @Select("SELECT ID, title, description, shortDescription, duration, logo FROM lessons WHERE id = #{lessonID}")
+    @Select("SELECT ID, title, description, shortDescription, duration, logo, deleted FROM lessons WHERE id = #{lessonID}")
     @Results({@Result(property = "id", column = "ID"),
             @Result(property = "tasks", javaType = List.class, column = "ID",
                     many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper.getTasksByLessonID"))})

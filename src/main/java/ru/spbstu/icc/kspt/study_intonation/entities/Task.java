@@ -12,4 +12,5 @@ public class Task {
     private String pathToAudio;
     private String pitch;
     private String textMarkup;
+    private boolean deleted;
 }

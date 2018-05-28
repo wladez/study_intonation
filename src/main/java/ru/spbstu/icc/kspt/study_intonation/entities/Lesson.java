@@ -16,4 +16,5 @@ public class Lesson {
     private int duration;
     private String logo;
     private List<Task> tasks = new ArrayList<>();
+    private boolean deleted;
 }
