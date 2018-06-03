@@ -2,13 +2,15 @@
 .collapsible-item__button {
     background-color: #777;
     color: white;
-    cursor: pointer;
     padding: 18px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
     font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .collapsible-item__button-active, .collapsible-item__button:hover {
@@ -32,4 +34,37 @@
 
 .collapsible-item__content-opened {
     /*max-height: 300px;*/
+}
+
+.collapsible-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.entity-title {
+    cursor: pointer;
+}
+
+.entity-title:hover {
+    color: lightgrey;
+}
+
+.arrow {
+    box-sizing: border-box;
+    height: 22px;
+    width: 22px;
+    border-style: solid;
+    border-color: white;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg);
+    transition: border-width 150ms ease-in-out;
+    position: relative;
+    top: -5px;
+    cursor: pointer;
+}
+
+.switcherOnOff {
+    position: relative;
+    left: 25px;
+    top: 5px;
 }

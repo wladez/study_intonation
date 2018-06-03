@@ -33,5 +33,5 @@ export class TaskModel extends BaseModel {
   };
 }
 
-const taskModel = new TaskModel('TASKS', history);
+const taskModel = new TaskModel('tasks', history);
 export default taskModel;

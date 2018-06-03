@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { CollapsibleItem } from '../Common/CollapsibleItem';
 import lessonModel from '../../models/LessonModel';
-import Lesson from '../Lesson/Lesson';
+import { EntityTitle } from "../Common/EntityTitle";
 
 @inject('history')
 @observer
@@ -40,9 +40,7 @@ class Lessons extends Component {
     const { lessons } = lessonModel;
     return (
       <div className='container'>
-        <div id='inbox-head'>
-          <h2>Followed lessons:</h2>
-        </div>
+        <EntityTitle model={lessonModel} />
         <div id='inbox-list'>
           {lessons.map(this.lessonMapper)}
         </div>

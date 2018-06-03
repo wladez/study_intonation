@@ -17,9 +17,11 @@ export class LessonModel extends BaseModel {
   @action
   fetchAll = async () => {
     this.isLoading = true;
-    this.lessons = await call(this.endpoint, {
-      method: 'GET'
-    });
+    if (this.lessons.length === 0) {
+      this.lessons = await call(this.endpoint, {
+        method: 'GET'
+      });
+    }
     this.isLoading = false;
   };
 
@@ -33,5 +35,5 @@ export class LessonModel extends BaseModel {
   };
 }
 
-const lessonModel = new LessonModel('LESSONS', history);
+const lessonModel = new LessonModel('lessons', history);
 export default lessonModel;

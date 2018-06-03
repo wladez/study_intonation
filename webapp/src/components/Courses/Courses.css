@@ -1,0 +1,14 @@
+.plus-icon {
+    color: green;
+    font-size:48px;
+    margin-left: 10px;
+}
+
+.plus-icon:hover {
+    cursor: pointer;
+}
+
+.courses-wrapper {
+    overflow-y: scroll;
+    max-height: 60vh;
+}

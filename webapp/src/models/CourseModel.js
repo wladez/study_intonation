@@ -5,6 +5,7 @@ import {BaseModel} from "./BaseModel";
 
 export class CourseModel extends BaseModel {
   @observable courses = [];
+  @observable lessons = [];
   @observable sampleCourse = {};
   @observable isLoading = false;
 
@@ -13,6 +14,7 @@ export class CourseModel extends BaseModel {
   }
 
   endpoint = '/courses';
+  lessonsEndpoint = '/lessons';
 
   constructor(id) {
     super(id, history);
@@ -22,6 +24,9 @@ export class CourseModel extends BaseModel {
   fetchAll = async () => {
     this.isLoading = true;
     this.courses = await call(this.endpoint, {
+      method: 'GET'
+    });
+    this.lessons = await call(this.lessonsEndpoint, {
       method: 'GET'
     });
     this.isLoading = false;
@@ -35,7 +40,33 @@ export class CourseModel extends BaseModel {
     });
     this.isLoading = false;
   };
+
+  @action
+  setAvailability = async (courseId, newStatus) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${courseId}/available?status=${newStatus}`, {
+      method: 'PUT',
+    }, true);
+    this.isLoading = false;
+  };
+
+  @action
+  addCourse = async (course) => {
+    this.isLoading = true;
+    const courseId = await call(`${this.endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(course)
+    }, true);
+    if (courseId.length > 0) {
+      console.log(`New course with ID=${courseId} was added successfully`);
+      this.courses.push(course);
+    }
+    this.isLoading = false;
+  };
 }
 
-const courseModel = new CourseModel('COURSES', history);
+const courseModel = new CourseModel('courses', history);
 export default courseModel;
