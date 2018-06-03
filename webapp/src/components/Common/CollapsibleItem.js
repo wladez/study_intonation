@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import classNames from "classnames";
+import Switch from "react-switch";
 import './CollapsibleItem.css';
 
 
 export class CollapsibleItem extends Component {
 
-  state = {
-    isActive: false
-  };
+  constructor(props) {
+    super(props);
+    const { entity } = props;
+    this.state = {
+      isActive: false,
+      isEntityAvailable: entity ? entity.available : true
+    };
+  }
 
   toggleActive = () => {
     this.setState({ isActive: !this.state.isActive });
@@ -22,9 +28,16 @@ export class CollapsibleItem extends Component {
     return entity[target];
   };
 
+  handleChange = async (id) => {
+    const { model } = this.props;
+    const { isEntityAvailable } = this.state;
+    await model.setAvailability(id, !isEntityAvailable);
+    this.setState({ isEntityAvailable: !isEntityAvailable });
+  };
+
 
   render() {
-    const { entity, target } = this.props;
+    const { entity, target, model } = this.props;
     const { isActive } = this.state;
     const buttonClasses = classNames({
       'collapsible-item__button': true,
@@ -36,12 +49,22 @@ export class CollapsibleItem extends Component {
     });
     return (
       <div className='collapsible-item__wrapper'>
-        <button
-          className={buttonClasses}
-          onClick={() => this.handleClick()}
-        >
-          {entity.title}
-        </button>
+        <div className={buttonClasses}>
+          <span className="entity-title">
+            {entity.title}
+            {
+              (model && model.id === 'courses') &&
+              <Switch
+                className='switcherOnOff'
+                onChange={() => this.handleChange(entity.id)}
+                checked={this.state.isEntityAvailable}
+                id="normal-switch"
+              />
+            }
+            </span>
+
+          <span className="arrow" onClick={() => this.handleClick()} />
+        </div>
         <div
           className={contentClasses}
           ref={node => this.contentRef = node}

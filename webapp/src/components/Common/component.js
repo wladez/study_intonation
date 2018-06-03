@@ -294,7 +294,7 @@ class Common extends Component {
                 <footer>
                     <div>
                         <b>Contact us: bogach@gmail.com</b> <br />
-                        We can help you to train you intonation skills
+                        We can help you to train your intonation skills
                     </div>
                 </footer>
 

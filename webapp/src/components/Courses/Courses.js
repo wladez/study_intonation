@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
+import SkyLight from 'react-skylight';
 import courseModel from "../../models/CourseModel";
 import '../Common/CollapsibleItem';
 import { CollapsibleItem } from "../Common/CollapsibleItem";
+import { EntityTitle } from "../Common/EntityTitle";
+import './Courses.css';
+import {CourseForm} from "./Form/CourseForm";
 
 @inject('history')
 @observer
@@ -18,6 +22,7 @@ class Courses extends Component {
       entity={course}
       target='lessons'
       onClick={this.onClickLessonOfCourse}
+      model={courseModel}
     />
   );
 
@@ -37,18 +42,20 @@ class Courses extends Component {
     return value.length ? Number(value) : null;
   };
 
+  addCourse = modalRef => (
+    <CourseForm model={courseModel} modal={modalRef} lessons={courseModel.lessons} />
+  );
+
   renderList = () => {
     const { courses } = courseModel;
     return (
       <div className='container'>
-        <div id="inbox-head">
-          <h2>Followed courses:</h2>
+        <EntityTitle model={courseModel} modalDialog={this.addCourse} />
+        <div className="courses-wrapper">
+          {
+            courses.map(this.courseMapper)
+          }
         </div>
-
-        {
-          courses.map(this.courseMapper)
-        }
-
       </div>
     );
   };
