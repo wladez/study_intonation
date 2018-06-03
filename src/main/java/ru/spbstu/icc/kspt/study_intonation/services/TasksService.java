@@ -15,6 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -106,7 +107,7 @@ public class TasksService {
 
     private static void printPitchToFile(final List<Pitch> pitches, final String filename) {
         try {
-            Formatter output = new Formatter(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename, "UTF-8");
+            Formatter output = new Formatter(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename, "UTF-8", Locale.US);
 
             for (Pitch pitch : pitches) {
                 output.format("%.3f %.3f%n", pitch.getTimeStamp(), pitch.getPitch());

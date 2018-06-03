@@ -29,7 +29,7 @@ public class PitchDetector implements PitchDetectionHandler {
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(filename));
         JVMAudioInputStream JVMAudioStream = new JVMAudioInputStream(audioStream);
 
-        PitchProcessor.PitchEstimationAlgorithm algorithm = PitchProcessor.PitchEstimationAlgorithm.YIN;
+        PitchProcessor.PitchEstimationAlgorithm algorithm = PitchProcessor.PitchEstimationAlgorithm.AMDF;
 
         AudioDispatcher dispatcher = new AudioDispatcher(JVMAudioStream, BUFFER_SIZE, BUFFER_OVERLAP);
         dispatcher.addAudioProcessor(new PitchProcessor(algorithm, SAMPLE_RATE, BUFFER_SIZE, this));
