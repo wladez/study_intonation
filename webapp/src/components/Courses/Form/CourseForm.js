@@ -108,8 +108,8 @@ export class CourseForm extends Component {
           </div>
 
 
-          <button className="btn btn-primary" onClick={ this.addCourse}>Add course</button>
-          <button className="btn btn-default" onClick={this.handleCancel.bind(this)}>Cancel</button>
+          <button className="btn btn-success" onClick={ this.addCourse}>Add course</button>
+          <button className="btn btn-danger" onClick={this.handleCancel.bind(this)}>Cancel</button>
         </form>
       </div>
     );
