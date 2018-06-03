@@ -60,10 +60,7 @@ export class CourseModel extends BaseModel {
       },
       body: JSON.stringify(course)
     }, true);
-    if (courseId.length > 0) {
-      console.log(`New course with ID=${courseId} was added successfully`);
-      this.courses.push(course);
-    }
+    this.courses.push(course);
     this.isLoading = false;
   };
 }
