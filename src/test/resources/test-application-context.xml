@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:context="http://www.springframework.org/schema/context">
+
+    <jdbc:embedded-database id="dataSource" type="H2">
+        <jdbc:script location="h2db.sql"/>
+        <jdbc:script location="initDB.sql"/>
+    </jdbc:embedded-database>
+
+    <!-- MyBatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" ref="myBatisMappers"/>
+    </bean>
+
+    <util:list id="myBatisMappers">
+        <value>classpath:/mappers/StatisticsMapper.xml</value>
+    </util:list>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+          c:sqlSessionFactory-ref="sqlSessionFactory"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <mybatis:scan base-package="ru.spbstu.icc.kspt.study_intonation.dao"/>
+
+    <context:component-scan base-package="ru.spbstu.icc.kspt.study_intonation.dao.*"/>
+
+    <bean class="ru.spbstu.icc.kspt.study_intonation.services.CoursesService"/>
+    <bean class="ru.spbstu.icc.kspt.study_intonation.services.LessonsService"/>
+    <bean class="ru.spbstu.icc.kspt.study_intonation.services.StatisticsService"/>
+    <bean class="ru.spbstu.icc.kspt.study_intonation.services.TasksService"/>
+
+</beans>

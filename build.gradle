@@ -15,9 +15,15 @@ dependencies {
     compile files('libs/TarsosDSP-2.3.jar')
     compileOnly 'org.projectlombok:lombok:1.16.20'
 
+    /* spring-boot */
+    compile 'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-jdbc'
+
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:+',
             'com.jolbox:bonecp:+'
 
     runtime 'com.h2database:h2:+',
             'mysql:mysql-connector-java:+' //if problems with database use 'mysql:mysql-connector-java:6.0.5' instead
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test:+'
 }

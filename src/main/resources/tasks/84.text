@@ -1,7 +1,8 @@
 [
-  { "fragment": "Guten tag!",
-    "start": "00:290",
-    "stop": "00:998",
+  { 
+  	"fragment": "Guten tag!",
+    "start": "00:500",
+    "stop": "01:300",
     "catchword": true
   }
 ]

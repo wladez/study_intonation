@@ -1,12 +1,10 @@
 package ru.spbstu.icc.kspt.study_intonation.services;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.spbstu.icc.kspt.study_intonation.dao.CoursesMapper;
 import ru.spbstu.icc.kspt.study_intonation.dao.LessonsMapper;
-import ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper;
 import ru.spbstu.icc.kspt.study_intonation.entities.Course;
 import ru.spbstu.icc.kspt.study_intonation.entities.Lesson;
 import ru.spbstu.icc.kspt.study_intonation.utilities.ValidationUtility;
@@ -22,22 +20,21 @@ public class CoursesService {
     private LessonsService lessonsService;
 
     private CoursesMapper coursesMapper;
-    private TasksMapper tasksMapper;
     private LessonsMapper lessonsMapper;
 
     public List<Course> showAll() {
         return coursesMapper.getAll();
     }
 
-    public List<Course> showAllNonUnique() {
-        List<Course> courses = showAll();
-        for (Course c: courses) {
-            for (Lesson lesson : c.getLessons()) {
-                lesson.setTasks(tasksMapper.getNonUniqueTasks(lesson.getId() ,c.getId()));
-            }
-        }
-        return courses;
-    }
+//    public List<Course> showAllNonUnique() {
+//        List<Course> courses = showAll();
+//        for (Course c: courses) {
+//            for (Lesson lesson : c.getLessons()) {
+//                lesson.setTasks(tasksMapper.getNonUniqueTasks(lesson.getId() ,c.getId()));
+//            }
+//        }
+//        return courses;
+//    }
 
     public Course getById(Long id) {
         return coursesMapper.getById(id);
@@ -144,7 +141,7 @@ public class CoursesService {
     private void updateLessons(Course fromDB, Set<Lesson> requestLessons) {
         addLessons(fromDB, requestLessons);
 
-        updateExistingLessons(fromDB, requestLessons);
+//        updateExistingLessons(fromDB, requestLessons);
 
         deleteCourseLessons(fromDB, requestLessons);
     }
@@ -155,15 +152,15 @@ public class CoursesService {
         newLessons.removeIf(lesson -> fromDB.getLessons().stream()
                                         .anyMatch(t -> t.getId().equals(lesson.getId())));
 
-        final List<Lesson> allLessonsFromDB = lessonsMapper.getAll();
+//        final List<Lesson> allLessonsFromDB = lessonsMapper.getAll();
 
         newLessons.forEach(newLesson -> {
-            createNonexistentTasks(allLessonsFromDB, newLesson);
+//            createNonexistentLessons(allLessonsFromDB, newLesson);
             coursesMapper.addLessonToCourse(fromDB.getId(), newLesson.getId());
         });
     }
 
-    private void createNonexistentTasks(List<Lesson> allLessonsFromDB, Lesson newLesson) {
+    private void createNonexistentLessons(List<Lesson> allLessonsFromDB, Lesson newLesson) {
         if (!allLessonsFromDB.contains(newLesson)) {
             lessonsMapper.create(newLesson);
         }

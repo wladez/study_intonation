@@ -91,7 +91,7 @@ public class LessonsService {
     private void updateTasks(Lesson fromDB, Set<Task> requestTasks) {
         addTasks(fromDB, requestTasks);
 
-        updateExistingTasks(fromDB, requestTasks);
+//        updateExistingTasks(fromDB, requestTasks);
 
         deleteLessonTasks(fromDB, requestTasks);
     }
@@ -102,10 +102,10 @@ public class LessonsService {
         newTasks.removeIf(task -> fromDB.getTasks().stream()
                                         .anyMatch(t -> t.getId().equals(task.getId())));
 
-        final List<Task> allTasksFromDB = tasksMapper.getAll();
+//        final List<Task> allTasksFromDB = tasksMapper.getAll();
 
         newTasks.forEach(newTask -> {
-            createNonexistentTasks(allTasksFromDB, newTask);
+//            createNonexistentTasks(allTasksFromDB, newTask);
             lessonsMapper.addTaskToLesson(fromDB.getId(), tasksMapper.getByText(newTask.getText()).getId());
         });
     }
