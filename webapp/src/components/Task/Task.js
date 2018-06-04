@@ -21,8 +21,8 @@ class Task extends Component {
     return (
       <div>
         <p>ID: #{task.id}</p>
-        <p>Title: {task.instruction}</p>
-        <p>Description: {task.text}</p>
+        <p>Instruction: {task.instruction}</p>
+        <p>Text: {task.text}</p>
       </div>
     );
   }

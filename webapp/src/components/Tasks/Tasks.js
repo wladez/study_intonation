@@ -18,7 +18,7 @@ class Tasks extends Component {
         key={`taskId-${tasks.id}`}
         id={tasks.id}
         onClick={this.handleTaskClick}
-      >{tasks.instruction}
+      >{tasks.text}
       </li>
     )
   };
