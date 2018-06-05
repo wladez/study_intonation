@@ -41,12 +41,16 @@
     flex-direction: row;
 }
 
-.entity-title {
+.entity-title__wrapper {
     cursor: pointer;
 }
 
-.entity-title:hover {
+.entity-title__wrapper:hover {
     color: lightgrey;
+}
+
+.entity-title {
+
 }
 
 .arrow {

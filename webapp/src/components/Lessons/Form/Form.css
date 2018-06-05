@@ -1,0 +1,15 @@
+/*.lessons-wrapper {*/
+/*display: flex;*/
+/*flex: 1;*/
+/*flex-direction: column;*/
+/*overflow-y: scroll;*/
+/*}*/
+
+.form-wrapper {
+    overflow:auto;
+    max-height: 65vh;
+}
+
+button {
+    margin-right: 10px;
+}

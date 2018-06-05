@@ -5,10 +5,12 @@ import {BaseModel} from "./BaseModel";
 
 export class LessonModel extends BaseModel {
   @observable lessons = [];
+  @observable tasks = [];
   @observable sampleLesson = {};
   @observable isLoading = false;
 
   endpoint = '/lessons';
+  tasksEndpoint = '/tasks';
 
   constructor(id) {
     super(id, history);
@@ -21,6 +23,9 @@ export class LessonModel extends BaseModel {
       this.lessons = await call(this.endpoint, {
         method: 'GET'
       });
+      this.tasks = await call(this.tasksEndpoint, {
+        method: 'GET'
+      });
     }
     this.isLoading = false;
   };
@@ -31,6 +36,20 @@ export class LessonModel extends BaseModel {
     this.sampleLesson = await call(`${this.endpoint}/${lessonId}`, {
       method: 'GET'
     });
+    this.isLoading = false;
+  };
+
+  @action
+  addLesson = async (lesson) => {
+    this.isLoading = true;
+    const lessonId = await call(`${this.endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(lesson)
+    }, true);
+    this.lessons.push(lesson);
     this.isLoading = false;
   };
 }

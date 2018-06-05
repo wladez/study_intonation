@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { observer } from "mobx-react";
 import classNames from "classnames";
 import Switch from "react-switch";
 import './CollapsibleItem.css';
 
-
+@observer
 export class CollapsibleItem extends Component {
 
   constructor(props) {
@@ -37,7 +38,7 @@ export class CollapsibleItem extends Component {
 
 
   render() {
-    const { entity, target, model } = this.props;
+    const { entity, target, model, history } = this.props;
     const { isActive } = this.state;
     const buttonClasses = classNames({
       'collapsible-item__button': true,
@@ -50,8 +51,8 @@ export class CollapsibleItem extends Component {
     return (
       <div className='collapsible-item__wrapper'>
         <div className={buttonClasses}>
-          <span className="entity-title">
-            {entity.title}
+          <span className="entity-title__wrapper">
+            <span className="entity-title" onClick={() => history.push(`/${model ? 'courses' : 'lessons'}/${entity.id}`) }>{entity.title}</span>
             {
               (model && model.id === 'courses') &&
               <Switch

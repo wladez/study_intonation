@@ -3,6 +3,9 @@ import { observer, inject } from 'mobx-react';
 import { CollapsibleItem } from '../Common/CollapsibleItem';
 import lessonModel from '../../models/LessonModel';
 import { EntityTitle } from "../Common/EntityTitle";
+import { LessonsForm } from "./Form/LessonsForm";
+
+import './Lessons.css';
 
 @inject('history')
 @observer
@@ -17,7 +20,9 @@ class Lessons extends Component {
       key={`lessonId-${lesson.id}`}
       entity={lesson}
       target='tasks'
-      onClick={this.onClickTaskOfLesson} />
+      onClick={this.onClickTaskOfLesson}
+      history={this.props.history}
+    />
   );
 
   onClickTaskOfLesson = e => {
@@ -26,21 +31,15 @@ class Lessons extends Component {
     this.props.history.push(`/tasks/${id}`);
   };
 
-  getLessonNumber = () => {
-    const path = window.location.pathname.slice();
-    const lastIndex = path.lastIndexOf('/');
-    if (lastIndex === 0) {
-      return null;
-    }
-    const value = path.slice(lastIndex+1);
-    return value.length ? Number(value) : null;
-  };
+  addLesson = modalRef => (
+    <LessonsForm model={lessonModel} modal={modalRef} tasks={lessonModel.tasks} />
+  );
 
   renderList = () => {
     const { lessons } = lessonModel;
     return (
       <div className='container'>
-        <EntityTitle model={lessonModel} />
+        <EntityTitle model={lessonModel} modalDialog={this.addLesson} />
         <div id='inbox-list'>
           {lessons.map(this.lessonMapper)}
         </div>

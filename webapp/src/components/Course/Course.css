@@ -1,0 +1,8 @@
+.edit-icon {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.edited {
+    background-color: yellow;
+}
