@@ -15,14 +15,14 @@ export class LessonItem extends Component {
   };
 
   render() {
-    const { lesson } = this.props;
+    const { lesson, classes } = this.props;
     const itemClasses = classNames({
       'list-group-item': true,
       'list-group-item-action': true,
     });
     return (
       <div className="list-item__wrapper">
-        <a className={itemClasses}>{lesson.title}</a>
+        <a className={classes || itemClasses}>{lesson.title}</a>
         <span className="cross-icon" onClick={() => this.onRemoveItem(lesson.id)}>x</span>
       </div>
     );

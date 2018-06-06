@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { isEmpty } from 'ramda';
 import classNames from "classnames";
+import SkyLight from 'react-skylight';
 import courseModel from '../../models/CourseModel';
-import { CourseForm } from "../Courses/Form/CourseForm";
 import { LessonItem } from "./LessonItem";
 
 import './Course.css';
@@ -18,6 +18,19 @@ class Course extends Component {
     title: "",
     description: ""
   };
+
+  async componentWillMount() {
+    const { courseId } = this.props.match.params;
+    await courseModel.fetchSample(courseId);
+    if (courseModel.lessons.length === 0) {
+      await courseModel.fetchAll();
+    }
+    this.setState({
+      lessons: courseModel.sampleCourse.lessons,
+      title: courseModel.sampleCourse.title,
+      description: courseModel.sampleCourse.description
+    });
+  }
 
   onTitleMode = () => {
     this.setState({editTitleMode: true});
@@ -49,19 +62,30 @@ class Course extends Component {
     this.setState({ lessons: this.state.lessons.filter(lesson => lesson.id !== lessonId)});
   };
 
-  componentWillMount() {
-    const { courseId } = this.props.match.params;
-    courseModel.fetchSample(courseId).then(() => {
-      if (courseModel.lessons.length === 0) {
-        courseModel.fetchAll();
-      }
-    })
-      .then(() => this.setState({
-        lessons: courseModel.sampleCourse.lessons,
-        title: courseModel.sampleCourse.title,
-        description: courseModel.sampleCourse.description
-      }));
-  }
+  openModal = () => {
+    this.addLessonsDialog.show();
+  };
+
+  hideModal = () => {
+    this.addLessonsDialog.hide();
+  };
+
+  addLessonsForm = model => {
+    const { lessons } = model;
+    const { lessons: stateLessons } = this.state;
+    let otherLessons = lessons.slice();
+    otherLessons = otherLessons
+      .map(lesson => ({ lesson, exists: false }))
+      .map(l => l);
+    return (
+      <SkyLight
+        hideOnOverlayClicked
+        ref={ref => this.addLessonsDialog = ref}
+        title="Add lessons">
+        <h4>Welcome</h4>
+      </SkyLight>
+    )
+  };
 
   renderLessonsList = () => {
     const { lessons } = this.state;
@@ -80,7 +104,9 @@ class Course extends Component {
                 />
             )
         }
+          <button className="btn btn-primary" onClick={() => this.openModal()}>Add lessons</button>
         </div>
+        {this.addLessonsForm(courseModel)}
         </Fragment>
     );
   };
