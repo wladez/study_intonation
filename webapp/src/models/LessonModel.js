@@ -19,14 +19,13 @@ export class LessonModel extends BaseModel {
   @action
   fetchAll = async () => {
     this.isLoading = true;
-    if (this.lessons.length === 0) {
-      this.lessons = await call(this.endpoint, {
-        method: 'GET'
-      });
-      this.tasks = await call(this.tasksEndpoint, {
-        method: 'GET'
-      });
-    }
+    this.lessons = await call(this.endpoint, {
+      method: 'GET'
+    });
+    this.tasks = await call(this.tasksEndpoint, {
+      method: 'GET'
+    });
+    this.lessons = this.lessons.filter(lesson => lesson.deleted !== true);
     this.isLoading = false;
   };
 
@@ -49,7 +48,7 @@ export class LessonModel extends BaseModel {
       },
       body: JSON.stringify(lesson)
     }, true);
-    this.lessons.push(lesson);
+    await this.fetchAll();
     this.isLoading = false;
   };
 
@@ -76,7 +75,7 @@ export class LessonModel extends BaseModel {
     await call(`${this.endpoint}/${lesson.id}`, {
       method: 'DELETE'
     }, true);
-    this.lessons = this.lessons.filter(l => l.deleted !== true);
+    await this.fetchAll();
     this.isLoading = false;
   }
 }

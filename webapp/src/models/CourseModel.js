@@ -60,7 +60,7 @@ export class CourseModel extends BaseModel {
       },
       body: JSON.stringify(course)
     }, true);
-    this.courses.push(course);
+    await this.fetchAll();
     this.isLoading = false;
   };
 
