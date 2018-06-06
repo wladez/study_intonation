@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { isEmpty } from 'ramda';
 import classNames from "classnames";
+import SkyLight from 'react-skylight';
 import courseModel from '../../models/CourseModel';
-import { CourseForm } from "../Courses/Form/CourseForm";
 import { LessonItem } from "./LessonItem";
+import { FormLessonItem } from "./FormLessonItem";
 
 import './Course.css';
 
@@ -18,6 +19,19 @@ class Course extends Component {
     title: "",
     description: ""
   };
+
+  async componentWillMount() {
+    const { courseId } = this.props.match.params;
+    await courseModel.fetchSample(courseId);
+    if (courseModel.lessons.length === 0) {
+      await courseModel.fetchAll();
+    }
+    this.setState({
+      lessons: courseModel.sampleCourse.lessons,
+      title: courseModel.sampleCourse.title,
+      description: courseModel.sampleCourse.description
+    });
+  }
 
   onTitleMode = () => {
     this.setState({editTitleMode: true});
@@ -49,39 +63,67 @@ class Course extends Component {
     this.setState({ lessons: this.state.lessons.filter(lesson => lesson.id !== lessonId)});
   };
 
-  componentWillMount() {
-    const { courseId } = this.props.match.params;
-    courseModel.fetchSample(courseId).then(() => {
-      if (courseModel.lessons.length === 0) {
-        courseModel.fetchAll();
-      }
-    })
-      .then(() => this.setState({
-        lessons: courseModel.sampleCourse.lessons,
-        title: courseModel.sampleCourse.title,
-        description: courseModel.sampleCourse.description
-      }));
-  }
+  onAddLesson = lessonId => {
+    const lessonToAdd = courseModel.lessons.find(lesson => lesson.id === lessonId);
+    if (lessonToAdd) {
+      this.setState({ lessons: [...this.state.lessons, lessonToAdd]})
+    }
+  };
+
+  openModal = () => {
+    this.addLessonsDialog.show();
+  };
+
+  hideModal = () => {
+    this.addLessonsDialog.hide();
+  };
+
+  getDifference = (my, all) => {
+    return all.filter(lesson => my.findIndex(l1 => l1.id === lesson.id) < 0);
+  };
+
+  addLessonsForm = model => {
+    const {lessons: my} = model.sampleCourse;
+    const { lessons } = model;
+    const others = this.getDifference(my, lessons);
+    console.log(others);
+    return (
+      <SkyLight
+        hideOnOverlayClicked
+        ref={ref => this.addLessonsDialog = ref}
+        title="Add lessons">
+        <h4>Choose lessons to add</h4>
+        {
+          others.map(lesson =>
+            <FormLessonItem
+              lesson={lesson}
+              model={courseModel}
+              onRemove={this.onRemoveLesson}
+              onAdd={this.onAddLesson} />
+          )
+        }
+      </SkyLight>
+    )
+  };
 
   renderLessonsList = () => {
     const { lessons } = this.state;
     return (
-      <Fragment>
+      <div className="lessons-list">
         <h3>Lessons</h3>
-        <div className="form-group">
         {
           lessons &&
           lessons
             .map(lesson =>
-                <LessonItem
-                  lesson={lesson}
-                  onRemove={this.onRemoveLesson}
-                  onAdd={() => {}}
-                />
+              <LessonItem
+                lesson={lesson}
+                model={courseModel}
+                onRemove={this.onRemoveLesson}
+                onAdd={() => {}}
+              />
             )
         }
         </div>
-        </Fragment>
     );
   };
 
@@ -146,9 +188,10 @@ class Course extends Component {
           }
           </p>
         {this.renderLessonsList()}
-
+        <button className="btn btn-primary" onClick={() => this.openModal()}>Add lessons</button>
         <button className="btn btn-success" onClick={this.saveCourse}>Save course</button>
         <button className="btn btn-danger" onClick={() => {}}>Delete course</button>
+        {this.addLessonsForm(courseModel)}
       </div>
     );
   }
