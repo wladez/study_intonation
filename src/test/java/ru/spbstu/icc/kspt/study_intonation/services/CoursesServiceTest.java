@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.spbstu.icc.kspt.study_intonation.entities.Course;
 import ru.spbstu.icc.kspt.study_intonation.entities.Lesson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -23,10 +25,10 @@ public class CoursesServiceTest {
     private static final Long DEFAULT_ID = 1L;
 
     @Autowired
-    CoursesService coursesService;
+    private CoursesService coursesService;
 
     @Autowired
-    LessonsService lessonsService;
+    private LessonsService lessonsService;
 
     @Test
     public void successfullyDelete() {
@@ -44,5 +46,29 @@ public class CoursesServiceTest {
     @Test(expected = RuntimeException.class)
     public void failedToDeleteDueToIdNotFound() {
         coursesService.delete(ID_NOT_IN_TABLE);
+    }
+
+    @Test
+    public void successfullyCreate() {
+        final String title = "newTitle";
+        final String description = "newDescription";
+        final int difficulty = 3;
+        final String category = "abc";
+        final Course course = new Course();
+        course.setTitle(title);
+        course.setDescription(description);
+        course.setDifficulty(difficulty);
+        course.setCategory(category);
+
+        List<Lesson> lessons = new ArrayList<>();
+        lessons.add(lessonsService.getById(DEFAULT_ID));
+
+        course.setLessons(lessons);
+
+        final Long test = coursesService.create(course);
+        assertThat(test, is(3L));
+
+        Course byId = coursesService.getById(test);
+        assertThat(byId.getLessons().size(), is(1));
     }
 }
