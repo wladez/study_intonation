@@ -19,14 +19,13 @@ export class LessonModel extends BaseModel {
   @action
   fetchAll = async () => {
     this.isLoading = true;
-    if (this.lessons.length === 0) {
-      this.lessons = await call(this.endpoint, {
-        method: 'GET'
-      });
-      this.tasks = await call(this.tasksEndpoint, {
-        method: 'GET'
-      });
-    }
+    this.lessons = await call(this.endpoint, {
+      method: 'GET'
+    });
+    this.tasks = await call(this.tasksEndpoint, {
+      method: 'GET'
+    });
+    this.lessons = this.lessons.filter(lesson => lesson.deleted !== true);
     this.isLoading = false;
   };
 
@@ -42,16 +41,43 @@ export class LessonModel extends BaseModel {
   @action
   addLesson = async (lesson) => {
     this.isLoading = true;
-    const lessonId = await call(`${this.endpoint}`, {
+    await call(`${this.endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(lesson)
     }, true);
-    this.lessons.push(lesson);
+    await this.fetchAll();
     this.isLoading = false;
   };
+
+  @action
+  save = async (lesson) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${lesson.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(lesson)
+    }, true);
+    const index = this.lessons.findIndex(l => l.id === lesson.id);
+    if (index > -1) {
+      this.lessons[index] = lesson;
+    }
+    this.isLoading = false;
+  }
+
+  @action
+  delete = async (lesson) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${lesson.id}`, {
+      method: 'DELETE'
+    }, true);
+    await this.fetchAll();
+    this.isLoading = false;
+  }
 }
 
 const lessonModel = new LessonModel('lessons', history);

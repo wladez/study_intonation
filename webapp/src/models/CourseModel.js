@@ -60,21 +60,34 @@ export class CourseModel extends BaseModel {
       },
       body: JSON.stringify(course)
     }, true);
-    this.courses.push(course);
+    await this.fetchAll();
     this.isLoading = false;
   };
 
   @action
   save = async (course) => {
     this.isLoading = true;
-    const updatedCourse = await call(`${this.endpoint}/${course.id}`, {
+    await call(`${this.endpoint}/${course.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(course)
     }, true);
-    this.courses.push(course);
+    const index = this.courses.findIndex(l => l.id === course.id);
+    if (index > -1) {
+      this.courses[index] = course;
+    }
+    this.isLoading = false;
+  }
+
+  @action
+  delete = async (course) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${course.id}`, {
+      method: 'DELETE'
+    }, true);
+    this.courses = this.courses.filter(c => c.id !== course.id);
     this.isLoading = false;
   }
 }

@@ -44,7 +44,7 @@ export class LessonsForm extends Component {
     e.preventDefault();
     modal.hide();
   };
-
+  
   addLesson = e => {
     e.preventDefault();
     const { title, description, duration, logo, tasksMap } = this.state;
