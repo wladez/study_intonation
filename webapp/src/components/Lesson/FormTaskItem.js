@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import classNames from "classnames";
 
-export class FormLessonItem extends Component {
+export class FormTaskItem extends Component {
 
   state = {
     active: false
@@ -14,7 +14,7 @@ export class FormLessonItem extends Component {
   };
 
   render() {
-    const { lesson } = this.props;
+    const { task } = this.props;
     const itemClasses = classNames({
       'list-group-item': true,
       'list-group-item-action': true,
@@ -22,7 +22,7 @@ export class FormLessonItem extends Component {
     });
     return (
       <Fragment>
-        <a className={itemClasses} onClick={() => this.toggleItem(lesson.id)}>{lesson.title}</a>
+        <a className={itemClasses} onClick={() => this.toggleItem(task.id)}>{task.text}</a>
       </Fragment>
     );
   }

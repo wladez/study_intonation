@@ -42,7 +42,7 @@ export class LessonModel extends BaseModel {
   @action
   addLesson = async (lesson) => {
     this.isLoading = true;
-    const lessonId = await call(`${this.endpoint}`, {
+    await call(`${this.endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,6 +52,20 @@ export class LessonModel extends BaseModel {
     this.lessons.push(lesson);
     this.isLoading = false;
   };
+
+  @action
+  save = async (lesson) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${lesson.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(lesson)
+    }, true);
+    this.lessons.push(lesson);
+    this.isLoading = false;
+  }
 }
 
 const lessonModel = new LessonModel('lessons', history);
