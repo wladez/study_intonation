@@ -32,6 +32,19 @@ public class LessonsService {
         return lesson.getId();
     }
 
+    public Lesson getById(final Long id) {
+        return lessonsMapper.getWithTasks(id);
+    }
+
+    public void delete(final Long id) {
+        if (!ValidationUtility.isValidId(id))
+            throw new RuntimeException("Invalid lessonID for deleting!");
+
+        if (!lessonsMapper.delete(id)) {
+            throw new RuntimeException("Lesson not found!");
+        }
+    }
+
     public Lesson update(final Lesson lesson) {
         if (ValidationUtility.isEmpty(lesson))
             throw new RuntimeException("Lesson is not specified");
@@ -134,17 +147,12 @@ public class LessonsService {
         deletedTasks.forEach(task -> lessonsMapper.removeTaskFromLesson(fromDB.getId(), task.getId()));
     }
 
-    public Lesson getById(final Long id) {
-        return lessonsMapper.getWithTasks(id);
-    }
 
-    public void delete(final Long id) {
-        if (!ValidationUtility.isValidId(id))
-            throw new RuntimeException("Invalid lessonID for deleting!");
+    private void addTasksToNewLesson(Lesson fromReq) {
+        final Set<Task> newTasks = new HashSet<>(fromReq.getTasks());
 
-        if (!lessonsMapper.delete(id)) {
-            throw new RuntimeException("Lesson not found!");
-        }
+        newTasks.forEach(newTask -> lessonsMapper.addTaskToLesson(fromReq.getId(), tasksMapper.getByText(newTask.getText()).getId()));
+
     }
 
 }
