@@ -42,6 +42,7 @@ public class CoursesService {
 
     public Long create(final Course course) {
         coursesMapper.create(course);
+        addLessonsToNewCourse(course);
         return course.getId();
     }
 
@@ -118,9 +119,6 @@ public class CoursesService {
     }
 
     private void updateDifficulty(Course fromDB, Course fromReq) {
-        if (ValidationUtility.isEmpty(fromReq.getDifficulty())) {
-            throw new RuntimeException("Difficulty of course can't be empty");
-        }
         fromDB.setDifficulty(fromReq.getDifficulty());
     }
 
@@ -132,9 +130,6 @@ public class CoursesService {
     }
 
     private void updateReleaseDate(Course fromDB, Course fromReq) {
-        if (ValidationUtility.isEmpty(fromReq.getReleaseDate())) {
-            throw new RuntimeException("ReleaseDate of course can't be empty");
-        }
         fromDB.setReleaseDate(fromReq.getReleaseDate());
     }
 
@@ -182,5 +177,11 @@ public class CoursesService {
                                                      .anyMatch(lesson -> delLesson.getId().equals(lesson.getId())));
 
         deletedLessons.forEach(lesson -> coursesMapper.removeLessonFromCourse(fromDB.getId(), lesson.getId()));
+    }
+
+    private void addLessonsToNewCourse(Course fromReq) {
+        final Set<Lesson> newLessons = new HashSet<>(fromReq.getLessons());
+
+        newLessons.forEach(newLesson -> coursesMapper.addLessonToCourse(fromReq.getId(), newLesson.getId()));
     }
 }
