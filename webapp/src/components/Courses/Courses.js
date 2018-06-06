@@ -5,8 +5,9 @@ import courseModel from "../../models/CourseModel";
 import '../Common/CollapsibleItem';
 import { CollapsibleItem } from "../Common/CollapsibleItem";
 import { EntityTitle } from "../Common/EntityTitle";
+import { CourseForm } from "./Form/CourseForm";
+
 import './Courses.css';
-import {CourseForm} from "./Form/CourseForm";
 
 @inject('history')
 @observer
@@ -23,6 +24,7 @@ class Courses extends Component {
       target='lessons'
       onClick={this.onClickLessonOfCourse}
       model={courseModel}
+      history={this.props.history}
     />
   );
 

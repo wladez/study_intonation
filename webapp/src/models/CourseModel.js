@@ -63,6 +63,20 @@ export class CourseModel extends BaseModel {
     this.courses.push(course);
     this.isLoading = false;
   };
+
+  @action
+  save = async (course) => {
+    this.isLoading = true;
+    const updatedCourse = await call(`${this.endpoint}/${course.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(course)
+    }, true);
+    this.courses.push(course);
+    this.isLoading = false;
+  }
 }
 
 const courseModel = new CourseModel('courses', history);

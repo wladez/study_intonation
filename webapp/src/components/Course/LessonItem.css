@@ -1,0 +1,16 @@
+.list-item__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cross-icon {
+    font-size: 18px;
+    color: red;
+    position: relative;
+    top: 8px;
+    right: 20px;
+}
+.cross-icon:hover {
+    cursor: pointer;
+}
