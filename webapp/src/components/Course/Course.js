@@ -94,16 +94,18 @@ class Course extends Component {
         hideOnOverlayClicked
         ref={ref => this.addLessonsDialog = ref}
         title="Add lessons">
-        <h4>Choose lessons to add</h4>
-        {
-          others.map(lesson =>
-            <FormLessonItem
-              lesson={lesson}
-              model={courseModel}
-              onRemove={this.onRemoveLesson}
-              onAdd={this.onAddLesson} />
-          )
-        }
+        <div className="form-wrapper">
+          <h4>Choose lessons to add</h4>
+          {
+            others.map(lesson =>
+              <FormLessonItem
+                lesson={lesson}
+                model={courseModel}
+                onRemove={this.onRemoveLesson}
+                onAdd={this.onAddLesson} />
+            )
+          }
+        </div>
       </SkyLight>
     )
   };

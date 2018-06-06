@@ -23,3 +23,8 @@ button {
     left: 50%;
     width: 30em;
 }
+
+.form-wrapper {
+    max-height: 65vh;
+    overflow-y: scroll;
+}
