@@ -23,7 +23,7 @@ public interface LessonsMapper {
             "FROM lessons WHERE courseID = #{id}")
     List<Lesson> getNonUniqueLessons(final Long id);
 
-    @Select("SELECT ID, title, description, shortDescription, duration, logo, deleted FROM lessons")
+    @Select("SELECT ID, title, description, shortDescription, duration, logo, deleted FROM lessons WHERE deleted = 0")
     @Results({@Result(property = "id", column = "ID"),
             @Result(property = "tasks", javaType = List.class, column = "ID",
                     many = @Many(select = "ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper.getTasksByLessonID"))})

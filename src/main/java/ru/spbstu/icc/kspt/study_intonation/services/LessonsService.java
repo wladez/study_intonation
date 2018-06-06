@@ -29,6 +29,7 @@ public class LessonsService {
 
     public Long create(final Lesson lesson) {
         lessonsMapper.create(lesson);
+        addTasksToNewLesson(lesson);
         return lesson.getId();
     }
 
