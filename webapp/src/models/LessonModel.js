@@ -63,7 +63,20 @@ export class LessonModel extends BaseModel {
       },
       body: JSON.stringify(lesson)
     }, true);
-    this.lessons.push(lesson);
+    const index = this.lessons.findIndex(l => l.id === lesson.id);
+    if (index > -1) {
+      this.lessons[index] = lesson;
+    }
+    this.isLoading = false;
+  }
+
+  @action
+  delete = async (lesson) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${lesson.id}`, {
+      method: 'DELETE'
+    }, true);
+    this.lessons = this.lessons.filter(l => l.deleted !== true);
     this.isLoading = false;
   }
 }

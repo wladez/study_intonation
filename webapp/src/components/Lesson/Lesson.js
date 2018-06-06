@@ -3,12 +3,12 @@ import { observer } from 'mobx-react';
 import classNames from "classnames";
 import SkyLight from 'react-skylight';
 import { isEmpty } from 'ramda';
+import { PulseLoader } from "halogenium";
 import lessonModel from '../../models/LessonModel';
 import { TaskItem } from "./TaskItem";
 import { FormTaskItem } from "./FormTaskItem";
 
 import './Lesson.css';
-import courseModel from "../../models/CourseModel";
 
 @observer
 class Lesson extends Component {
@@ -148,6 +148,13 @@ class Lesson extends Component {
     await lessonModel.fetchSample(id);
   };
 
+  deleteLesson = async (e) => {
+    e.preventDefault();
+    const { sampleLesson } = lessonModel;
+    await lessonModel.delete(sampleLesson);
+    this.props.history.push('/lessons');
+  };
+
 
 
   render() {
@@ -160,6 +167,9 @@ class Lesson extends Component {
     }
     return (
       <div className="container">
+        {
+          lessonModel.isLoading && <PulseLoader className="spinner" color="#26A65B" size="20px" margin="4px"/>
+        }
         <p>ID: #{lesson.id}</p>
         <p>Title:
           {
@@ -192,7 +202,7 @@ class Lesson extends Component {
         {this.renderTasksList()}
         <button className="btn btn-primary" onClick={() => this.openModal()}>Add task</button>
         <button className="btn btn-success" onClick={this.saveLesson}>Save lesson</button>
-        <button className="btn btn-danger" onClick={() => {}}>Delete lesson</button>
+        <button className="btn btn-danger" onClick={this.deleteLesson}>Delete lesson</button>
         {this.addTasksForm(lessonModel)}
       </div>
     );

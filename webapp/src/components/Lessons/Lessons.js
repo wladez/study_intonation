@@ -41,7 +41,11 @@ class Lessons extends Component {
       <div className='container'>
         <EntityTitle model={lessonModel} modalDialog={this.addLesson} />
         <div id='inbox-list'>
-          {lessons.map(this.lessonMapper)}
+          {
+            lessons
+              .filter(lesson => lesson.deleted !== true)
+              .map(this.lessonMapper)
+          }
         </div>
       </div>
     );

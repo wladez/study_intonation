@@ -1,14 +1,16 @@
 import React, { Component, Fragment } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { isEmpty } from 'ramda';
 import classNames from "classnames";
 import SkyLight from 'react-skylight';
+import { PulseLoader } from "halogenium";
 import courseModel from '../../models/CourseModel';
 import { LessonItem } from "./LessonItem";
 import { FormLessonItem } from "./FormLessonItem";
 
 import './Course.css';
 
+@inject("history")
 @observer
 class Course extends Component {
 
@@ -148,6 +150,13 @@ class Course extends Component {
     await courseModel.fetchSample(id);
   };
 
+  deleteCourse = async (e) => {
+    e.preventDefault();
+    const { sampleCourse } = courseModel;
+    await courseModel.delete(sampleCourse);
+    this.props.history.push('/courses');
+  };
+
   render() {
     const course = courseModel.sampleCourse;
     const { editTitleMode, editDescriptionMode, title, description } = this.state;
@@ -158,6 +167,9 @@ class Course extends Component {
     }
     return (
       <div className="container">
+        {
+          courseModel.isLoading && <PulseLoader className="spinner" color="#26A65B" size="16px" margin="4px"/>
+        }
         <p>ID: #{course.id}</p>
         <p>Title:
           {
@@ -190,7 +202,7 @@ class Course extends Component {
         {this.renderLessonsList()}
         <button className="btn btn-primary" onClick={() => this.openModal()}>Add lessons</button>
         <button className="btn btn-success" onClick={this.saveCourse}>Save course</button>
-        <button className="btn btn-danger" onClick={() => {}}>Delete course</button>
+        <button className="btn btn-danger" onClick={this.deleteCourse}>Delete course</button>
         {this.addLessonsForm(courseModel)}
       </div>
     );
