@@ -5,6 +5,7 @@ import classNames from "classnames";
 import SkyLight from 'react-skylight';
 import courseModel from '../../models/CourseModel';
 import { LessonItem } from "./LessonItem";
+import { FormLessonItem } from "./FormLessonItem";
 
 import './Course.css';
 
@@ -62,6 +63,13 @@ class Course extends Component {
     this.setState({ lessons: this.state.lessons.filter(lesson => lesson.id !== lessonId)});
   };
 
+  onAddLesson = lessonId => {
+    const lessonToAdd = courseModel.lessons.find(lesson => lesson.id === lessonId);
+    if (lessonToAdd) {
+      this.setState({ lessons: [...this.state.lessons, lessonToAdd]})
+    }
+  };
+
   openModal = () => {
     this.addLessonsDialog.show();
   };
@@ -70,19 +78,30 @@ class Course extends Component {
     this.addLessonsDialog.hide();
   };
 
+  getDifference = (my, all) => {
+    return all.filter(lesson => my.findIndex(l1 => l1.id === lesson.id) < 0);
+  };
+
   addLessonsForm = model => {
+    const {lessons: my} = model.sampleCourse;
     const { lessons } = model;
-    const { lessons: stateLessons } = this.state;
-    let otherLessons = lessons.slice();
-    otherLessons = otherLessons
-      .map(lesson => ({ lesson, exists: false }))
-      .map(l => l);
+    const others = this.getDifference(my, lessons);
+    console.log(others);
     return (
       <SkyLight
         hideOnOverlayClicked
         ref={ref => this.addLessonsDialog = ref}
         title="Add lessons">
-        <h4>Welcome</h4>
+        <h4>Choose lessons to add</h4>
+        {
+          others.map(lesson =>
+            <FormLessonItem
+              lesson={lesson}
+              model={courseModel}
+              onRemove={this.onRemoveLesson}
+              onAdd={this.onAddLesson} />
+          )
+        }
       </SkyLight>
     )
   };
@@ -90,24 +109,21 @@ class Course extends Component {
   renderLessonsList = () => {
     const { lessons } = this.state;
     return (
-      <Fragment>
+      <div className="lessons-list">
         <h3>Lessons</h3>
-        <div className="form-group">
         {
           lessons &&
           lessons
             .map(lesson =>
-                <LessonItem
-                  lesson={lesson}
-                  onRemove={this.onRemoveLesson}
-                  onAdd={() => {}}
-                />
+              <LessonItem
+                lesson={lesson}
+                model={courseModel}
+                onRemove={this.onRemoveLesson}
+                onAdd={() => {}}
+              />
             )
         }
-          <button className="btn btn-primary" onClick={() => this.openModal()}>Add lessons</button>
         </div>
-        {this.addLessonsForm(courseModel)}
-        </Fragment>
     );
   };
 
@@ -172,9 +188,10 @@ class Course extends Component {
           }
           </p>
         {this.renderLessonsList()}
-
+        <button className="btn btn-primary" onClick={() => this.openModal()}>Add lessons</button>
         <button className="btn btn-success" onClick={this.saveCourse}>Save course</button>
         <button className="btn btn-danger" onClick={() => {}}>Delete course</button>
+        {this.addLessonsForm(courseModel)}
       </div>
     );
   }

@@ -8,6 +8,7 @@ import { EntityTitle } from "../Common/EntityTitle";
 import { CourseForm } from "./Form/CourseForm";
 
 import './Courses.css';
+import './../Common/common.css';
 
 @inject('history')
 @observer

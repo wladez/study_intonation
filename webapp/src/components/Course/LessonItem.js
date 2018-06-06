@@ -14,15 +14,21 @@ export class LessonItem extends Component {
     this.setState({ active: false});
   };
 
+  checkNew = () => {
+    const { lesson, model } = this.props;
+    return model.sampleCourse.lessons.findIndex(l => l.id === lesson.id) < 0;
+  };
+
   render() {
-    const { lesson, classes } = this.props;
+    const { lesson } = this.props;
     const itemClasses = classNames({
       'list-group-item': true,
       'list-group-item-action': true,
+      'edited': this.checkNew()
     });
     return (
       <div className="list-item__wrapper">
-        <a className={classes || itemClasses}>{lesson.title}</a>
+        <a className={itemClasses}>{lesson.title}</a>
         <span className="cross-icon" onClick={() => this.onRemoveItem(lesson.id)}>x</span>
       </div>
     );

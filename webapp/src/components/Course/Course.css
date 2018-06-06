@@ -6,3 +6,13 @@
 .edited {
     background-color: yellow;
 }
+
+.container {
+    overflow:auto;
+    max-height: 75vh;
+}
+
+button {
+    margin-right: 10px;
+    margin-top: 10px;
+}
