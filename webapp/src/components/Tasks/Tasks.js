@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { observer, inject } from 'mobx-react';
 import taskModel from "../../models/TaskModel";
-import Task from '../Task/Task';
+import { EntityTitle } from "../Common/EntityTitle";
+import { NewTaskForm } from "./NewTaskForm";
+
+import './Tasks.css';
 
 @inject('history')
 @observer
@@ -29,41 +32,29 @@ class Tasks extends Component {
     this.props.history.push(`/tasks/${id}`);
   };
 
-  getTaskNumber = () => {
-    const path = window.location.pathname.slice();
-    const lastIndex = path.lastIndexOf('/');
-    if (lastIndex === 0) {
-      return null;
-    }
-    const value = path.slice(lastIndex+1);
-    return value.length ? Number(value) : null;
-  };
+  renderAddTaskForm = modalRef => (
+    <NewTaskForm model={taskModel} modal={modalRef} tasks={taskModel.tasks} />
+  );
 
   renderList = () => {
     const { tasks } = taskModel;
     return (
-      <div>
-        <div className="container" id="inbox-head">
-          <h2>Followed tasks:</h2>
-        </div>
-        <div className="container" id="inbox-list">
-          <ul>
-            {
-              tasks.map(this.taskMapper)
-            }
+      <div id="inbox-list">
+        <ul>
+          {
+            tasks.map(this.taskMapper)
+          }
           </ul>
-        </div>
       </div>
     );
   };
 
-  renderParticularTask = taskNumber => {
-    return <Task taskNumber={taskNumber} />
-  };
-
   render() {
     return (
-      this.renderList()
+          <div className="container">
+            <EntityTitle model={taskModel} modalDialog={this.renderAddTaskForm} />
+            {this.renderList()}
+          </div>
     );
 
   }
