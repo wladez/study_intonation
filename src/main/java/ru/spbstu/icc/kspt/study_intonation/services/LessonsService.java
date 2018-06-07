@@ -120,7 +120,7 @@ public class LessonsService {
 
         newTasks.forEach(newTask -> {
 //            createNonexistentTasks(allTasksFromDB, newTask);
-            lessonsMapper.addTaskToLesson(fromDB.getId(), tasksMapper.getByText(newTask.getText()).getId());
+            lessonsMapper.addTaskToLesson(fromDB.getId(), newTask.getId());
         });
     }
 
