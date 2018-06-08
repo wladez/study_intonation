@@ -31,6 +31,20 @@ export class TaskModel extends BaseModel {
     });
     this.isLoading = false;
   };
+
+  @action
+  add = async (task) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    });
+    await this.fetchAll();
+    this.isLoading = false;
+  };
 }
 
 const taskModel = new TaskModel('tasks', history);
