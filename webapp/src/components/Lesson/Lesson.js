@@ -160,19 +160,13 @@ class Lesson extends Component {
 
 
   render() {
-    const lesson = lessonModel.sampleLesson;
     const { editTitleMode, editDescriptionMode, title, description } = this.state;
-    if (isEmpty(lesson)) {
-      return (
-        <div>Go to Lessons list firstly to fetch the data!</div>
-      );
-    }
+
     return (
       <div className="container">
         {
           lessonModel.isLoading && <PulseLoader className="spinner" color="#26A65B" size="20px" margin="4px"/>
         }
-        <p>ID: #{lesson.id}</p>
         <p>Title:
           {
             editTitleMode ?

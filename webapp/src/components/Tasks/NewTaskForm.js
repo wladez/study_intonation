@@ -7,9 +7,6 @@ export class NewTaskForm extends Component {
   state = {
     text: '',
     instruction: '',
-    pathToAudio: '',
-    pitch: '',
-    textMarkup: ''
   };
 
   handleText = e => {
@@ -20,18 +17,6 @@ export class NewTaskForm extends Component {
     this.setState({ instruction: e.target.value });
   };
 
-  handlePathToAudio = e => {
-    this.setState({ pathToAudio: e.target.value });
-  };
-
-  handlePitch = e => {
-    this.setState({ pitch: e.target.value });
-  };
-
-  handleTextMarkup = e => {
-    this.setState({ textMarkup: e.target.value });
-  };
-
   handleCancel = e => {
     const { modal } = this.props;
     e.preventDefault();
@@ -40,31 +25,18 @@ export class NewTaskForm extends Component {
 
   addTask = e => {
     e.preventDefault();
-    const { text, instruction, pathToAudio, pitch, textMarkup } = this.state;
+    const { text, instruction } = this.state;
     const { model, modal } = this.props;
-    // const attachedTasks = Array.from(tasksMap)
-    //   .map(taskItems => ({id: taskItems[0], isAdded: taskItems[1]}))
-    //   .filter(task => task.isAdded === true);
-    // const newTasks = [];
-    // attachedTasks
-    //   .forEach(attachedLesson => {
-    //     const foundTask = tasks.find(task => task.id === attachedLesson.id);
-    //     newTasks.push(foundTask);
-    //   });
     const newTask = {
       text,
-      instruction,
-      pathToAudio,
-      pitch,
-      textMarkup
+      instruction
     };
-    model.addTask(newTask);
+    model.add(newTask);
     modal.hide();
 
   };
 
   render() {
-    const { tasks } = this.props;
     return (
       <div className="form-wrapper">
         <form>
@@ -86,8 +58,8 @@ export class NewTaskForm extends Component {
             />
           </div>
 
-          <button className="btn btn-success" onClick={ this.addTask}>Add task</button>
-          <button className="btn btn-danger" onClick={this.handleCancel.bind(this)}>Cancel</button>
+          <button className="btn btn-success" onClick={this.addTask}>Add task</button>
+          <button className="btn btn-danger" onClick={() => this.handleCancel()}>Cancel</button>
         </form>
       </div>
     );

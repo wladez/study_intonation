@@ -42,7 +42,9 @@ class Tasks extends Component {
       <div id="inbox-list">
         <ul>
           {
-            tasks.map(this.taskMapper)
+            tasks
+              .filter(task => task.deleted !== true)
+              .map(this.taskMapper)
           }
           </ul>
       </div>
