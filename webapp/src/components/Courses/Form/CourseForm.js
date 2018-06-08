@@ -104,6 +104,7 @@ export class CourseForm extends Component {
           </div>
 
           <div className="form-group">
+            <label>Lessons</label>
             {lessonsView}
           </div>
 
