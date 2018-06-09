@@ -2,6 +2,10 @@ package ru.spbstu.icc.kspt.study_intonation.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.spbstu.icc.kspt.study_intonation.common.Methods;
@@ -60,5 +64,14 @@ public class TasksController {
     @PostMapping(Methods.ID_PATTERN+Methods.UPLOAD_MARKUP)
     public void uploadMarkup(@PathVariable final Long id, @RequestBody String string) {
         tasksService.uploadMarkup(id, string);
+    }
+
+    @GetMapping(Methods.ID_PATTERN+Methods.DOWNLOAD_AUDIO)
+    public ResponseEntity<Resource> downloadAudio(@PathVariable final Long id) {
+        AbstractResource audioFile = tasksService.getAudioFile(id);
+
+        return ResponseEntity.ok()
+                             .contentType(MediaType.parseMediaType("audio/mpeg"))
+                             .body(audioFile);
     }
 }
