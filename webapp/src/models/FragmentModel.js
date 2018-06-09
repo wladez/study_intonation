@@ -19,21 +19,21 @@ export class FragmentModel {
 
   @action
   setFragment = fragment => {
-    this.fragment = fragment;
+    this.fragment = fragment || "";
   };
 
   @action
   setStart = start => {
-    this.start = start;
+    this.start = start = "";
   };
 
   @action
   setStop = stop => {
-    this.stop = stop;
+    this.stop = stop = "";
   };
 
   @action
   setCatchWord = catchWord => {
-    this.catchWord = catchWord;
+    this.catchWord = catchWord || true;
   };
 }
