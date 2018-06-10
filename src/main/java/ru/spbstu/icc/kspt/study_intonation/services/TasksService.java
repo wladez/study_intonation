@@ -1,5 +1,6 @@
 package ru.spbstu.icc.kspt.study_intonation.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -45,8 +46,16 @@ public class TasksService {
             throw new RuntimeException("Task id is invalid");
         }
 
-        if (tasksMapper.update(task))
+        if (tasksMapper.update(task)) {
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                String valueAsString = mapper.writeValueAsString(task.getMarkups());
+                uploadMarkup(task.getId(), valueAsString);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             return task;
+        }
 
         else throw new RuntimeException("Update failed");
 
@@ -150,8 +159,8 @@ public class TasksService {
         if (!ValidationUtility.isValidId(id))
             throw new RuntimeException("Invalid taskID for adding text markup!");
 
-        if (ValidationUtility.isEmpty(string))
-            throw new RuntimeException("No content for markup");
+//        if (ValidationUtility.isEmpty(string))
+//            throw new RuntimeException("No content for markup");
 
         String filename = "tasks/" + id + ".text";
 
