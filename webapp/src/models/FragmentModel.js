@@ -9,7 +9,7 @@ export class FragmentModel {
   @observable catchWord = true;
 
   constructor(data) {
-    const {id, fragment, start, stop, catchWord} = data;
+    const {id="", fragment="", start="", stop="", catchWord=true} = data;
     this.id = id;
     this.setFragment(fragment);
     this.setStart(start);
@@ -19,21 +19,21 @@ export class FragmentModel {
 
   @action
   setFragment = fragment => {
-    this.fragment = fragment || "";
+    this.fragment = fragment;
   };
 
   @action
   setStart = start => {
-    this.start = start = "";
+    this.start = start;
   };
 
   @action
   setStop = stop => {
-    this.stop = stop = "";
+    this.stop = stop;
   };
 
   @action
   setCatchWord = catchWord => {
-    this.catchWord = catchWord || true;
+    this.catchWord = catchWord;
   };
 }

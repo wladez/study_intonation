@@ -24,24 +24,12 @@ class Task extends Component {
     const { taskId } = this.props.match.params;
     await taskModel.fetchSample(taskId);
     const { text, instruction, markups } = taskModel.sampleTask;
-    this.setState({ text, instruction });
-    // this.setState({ fragments: markups }); Waiting for back-end to implement
-    const mockedFragments = [
-      {
-        id: 1,
-        fragment: "Hallelujah! Hallelujah!",
-        start: "0.125",
-        stop: "0.475",
-        catchWord: true
-      },
-      {
-        id: 2,
-        fragment: "Welcome to the!",
-        start: "0.502",
-        stop: "0.648",
-        catchWord: true
-      }];
-    this.setState({ fragments: mockedFragments.map(f => new FragmentModel(f))});
+    this.setState({
+      text,
+      instruction,
+      fragments: markups ? markups.map(f => new FragmentModel(f)) : []
+    });
+    // this.setState({ fragments: mockedFragments.map(f => new FragmentModel(f))});
   }
 
   toggleTextMode = () => {
@@ -72,8 +60,40 @@ class Task extends Component {
 
   saveTask = async (e) => {
     e.preventDefault();
-    console.log(this.state.fragments);
+    const { text, instruction, fragments } = this.state;
+    const { sampleTask, sampleTask: { id } } = taskModel;
+    const markups = [];
+    fragments.forEach(f => {
+      const { fragment, start, stop, catchWord } = f;
+      markups.push({fragment, start, stop, catchword: catchWord});
+    });
 
+    const updatedTask = {
+        ...sampleTask,
+      text,
+      instruction,
+      markups
+    };
+    await taskModel.save(updatedTask);
+    await taskModel.fetchSample(id);
+    this.updateStateAfterSave();
+  };
+
+  updateStateAfterSave = () => {
+    const { text, instruction, markups } = taskModel.sampleTask;
+    this.setState({
+      text,
+      instruction,
+      fragments: markups || []
+    });
+  };
+
+  addFragment = e => {
+    e.preventDefault();
+    const { fragments } = this.state;
+    this.setState({
+      fragments: [...fragments, new FragmentModel({id: Date.now()/1000})]
+    });
   };
 
   deleteTask = async (e) => {
@@ -149,6 +169,7 @@ class Task extends Component {
 
         {this.renderFragments()}
 
+        <button className="btn btn-success" onClick={this.addFragment}>Add fragment</button>
         <button className="btn btn-success" onClick={this.saveTask}>Save task</button>
         <button className="btn btn-primary" onClick={this.addAudio}>Add audio</button>
       </div>
