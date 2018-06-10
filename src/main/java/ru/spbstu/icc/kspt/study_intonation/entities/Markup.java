@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.study_intonation.responses;
+package ru.spbstu.icc.kspt.study_intonation.entities;
 
 import lombok.Data;
 

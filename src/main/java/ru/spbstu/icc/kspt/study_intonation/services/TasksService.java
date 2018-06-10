@@ -6,13 +6,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.spbstu.icc.kspt.study_intonation.common.Paths;
 import ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper;
 import ru.spbstu.icc.kspt.study_intonation.entities.Task;
-import ru.spbstu.icc.kspt.study_intonation.responses.Markup;
+import ru.spbstu.icc.kspt.study_intonation.entities.Markup;
 import ru.spbstu.icc.kspt.study_intonation.utilities.Pitch;
 import ru.spbstu.icc.kspt.study_intonation.utilities.PitchDetector;
 import ru.spbstu.icc.kspt.study_intonation.utilities.ValidationUtility;
@@ -54,7 +53,10 @@ public class TasksService {
     }
 
     public Task getById(final Long id) {
-        return tasksMapper.get(id);
+        Task task = tasksMapper.get(id);
+        if (task.getTextMarkup() != null)
+            task.setMarkups(getMarkup(task));
+        return task;
     }
 
     public void delete(final Long id) {
@@ -64,6 +66,18 @@ public class TasksService {
         if (!tasksMapper.delete(id)) {
             throw new RuntimeException("Task not found!");
         }
+    }
+
+    public AbstractResource getAudioFile(Long id) {
+        String filename = Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + "tasks/" + id + ".mp3";
+        ByteArrayResource resource = null;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(java.nio.file.Paths.get(filename)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        return new FileSystemResource(new File(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename));
+        return resource;
     }
 
     public void uploadAudio(final Long id, final MultipartFile file) {
@@ -152,10 +166,10 @@ public class TasksService {
 
     }
 
-    public List<Markup> getMarkup(Task task) {
+    private List<Markup> getMarkup(Task task) {
         String filename = "tasks/" + task.getId() + ".text";
         StringBuilder builder = new StringBuilder();
-        String currentLine = null;
+        String currentLine;
         List<Markup> result = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename))) {
            while ((currentLine = reader.readLine()) != null ) builder.append(currentLine);
@@ -166,17 +180,5 @@ public class TasksService {
             e.printStackTrace();
         }
         return result;
-    }
-
-    public AbstractResource getAudioFile(Long id) {
-        String filename = Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + "tasks/" + id + ".mp3";
-        ByteArrayResource resource = null;
-        try {
-            resource = new ByteArrayResource(Files.readAllBytes(java.nio.file.Paths.get(filename)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        return new FileSystemResource(new File(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename));
-        return resource;
     }
 }
