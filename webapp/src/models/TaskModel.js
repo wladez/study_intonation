@@ -45,6 +45,23 @@ export class TaskModel extends BaseModel {
     await this.fetchAll();
     this.isLoading = false;
   };
+
+  @action
+  save = async (task) => {
+    this.isLoading = true;
+    await call(`${this.endpoint}/${task.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    }, true);
+    // update Tasks array
+    const index = this.tasks.findIndex(t => t.id === task.id);
+    if (index > -1) {
+      this.tasks[index] = task;
+    }
+  }
 }
 
 const taskModel = new TaskModel('tasks', history);

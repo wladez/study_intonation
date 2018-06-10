@@ -1,20 +1,19 @@
 import { observable, action } from 'mobx';
-import history from "../utils/history";
 
 export class FragmentModel {
   @observable id = 0;
   @observable fragment = "";
   @observable start = "";
   @observable stop = "";
-  @observable catchWord = true;
+  @observable catchword = true;
 
   constructor(data) {
-    const {id, fragment, start, stop, catchWord} = data;
+    const {id="", fragment="", start="", stop="", catchword=true} = data;
     this.id = id;
     this.setFragment(fragment);
     this.setStart(start);
     this.setStop(stop);
-    this.setCatchWord(catchWord);
+    this.setCatchWord(catchword);
   }
 
   @action
@@ -33,7 +32,7 @@ export class FragmentModel {
   };
 
   @action
-  setCatchWord = catchWord => {
-    this.catchWord = catchWord;
+  setCatchWord = catchword => {
+    this.catchword = catchword;
   };
 }
