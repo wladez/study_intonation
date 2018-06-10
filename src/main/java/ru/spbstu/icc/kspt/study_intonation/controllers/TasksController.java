@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.spbstu.icc.kspt.study_intonation.common.Methods;
 import ru.spbstu.icc.kspt.study_intonation.common.Paths;
 import ru.spbstu.icc.kspt.study_intonation.entities.Task;
-import ru.spbstu.icc.kspt.study_intonation.responses.TaskResponse;
 import ru.spbstu.icc.kspt.study_intonation.services.TasksService;
 
 import java.util.List;
@@ -35,14 +34,8 @@ public class TasksController {
     }
 
     @GetMapping(Methods.ID_PATTERN)
-    public TaskResponse get(@PathVariable final Long id) {
-        TaskResponse response = new TaskResponse();
-        response.setTask(tasksService.getById(id));
-        if (response.getTask().getTextMarkup() != null)
-            response.setMarkups(tasksService.getMarkup(response.getTask()));
-//        if (response.getTask().getPathToAudio() != null)
-//            response.setAudio(tasksService.getAudioFile(response.getTask()));
-        return response;
+    public Task get(@PathVariable final Long id) {
+        return tasksService.getById(id);
     }
 
     @PutMapping(Methods.ID_PATTERN)
