@@ -20,5 +20,6 @@ public final class Methods {
 
     /*Tasks methods*/
     public static final String UPLOAD_AUDIO = "/uploadAudio";
+    public static final String DOWNLOAD_AUDIO = "/downloadAudio";
     public static final String UPLOAD_MARKUP = "/uploadMarkup";
 }

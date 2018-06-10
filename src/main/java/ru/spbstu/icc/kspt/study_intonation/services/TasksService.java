@@ -1,18 +1,25 @@
 package ru.spbstu.icc.kspt.study_intonation.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.spbstu.icc.kspt.study_intonation.common.Paths;
 import ru.spbstu.icc.kspt.study_intonation.dao.TasksMapper;
 import ru.spbstu.icc.kspt.study_intonation.entities.Task;
+import ru.spbstu.icc.kspt.study_intonation.responses.Markup;
 import ru.spbstu.icc.kspt.study_intonation.utilities.Pitch;
 import ru.spbstu.icc.kspt.study_intonation.utilities.PitchDetector;
 import ru.spbstu.icc.kspt.study_intonation.utilities.ValidationUtility;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
@@ -143,5 +150,33 @@ public class TasksService {
 
         tasksMapper.setTextMarkup(filename, id);
 
+    }
+
+    public List<Markup> getMarkup(Task task) {
+        String filename = "tasks/" + task.getId() + ".text";
+        StringBuilder builder = new StringBuilder();
+        String currentLine = null;
+        List<Markup> result = null;
+        try (BufferedReader reader = new BufferedReader(new FileReader(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename))) {
+           while ((currentLine = reader.readLine()) != null ) builder.append(currentLine);
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.readValue(builder.toString(), new TypeReference<List<Markup>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public AbstractResource getAudioFile(Long id) {
+        String filename = Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + "tasks/" + id + ".mp3";
+        ByteArrayResource resource = null;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(java.nio.file.Paths.get(filename)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        return new FileSystemResource(new File(Paths.RESOURCE_DIRECTORY.getAbsolutePath() + "/" + filename));
+        return resource;
     }
 }
