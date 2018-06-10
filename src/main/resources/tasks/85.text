@@ -1,14 +1,1 @@
-[
-  { 
-  	"fragment": "Wie",
-    "start": "00:280",
-    "stop": "00:460",
-    "catchword": true
-  },
-  { 
-  	"fragment": "geht's",
-    "start": "00:460",
-    "stop": "00:950",
-    "catchword": true
-  }
-]
+[{"fragment":"Test fragment1","start":"0.125","stop":"0.250","catchword":true},{"fragment":"Test fragment2","start":"0.368","stop":"0.492","catchword":false}]

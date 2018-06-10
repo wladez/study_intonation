@@ -64,8 +64,8 @@ class Task extends Component {
     const { sampleTask, sampleTask: { id } } = taskModel;
     const markups = [];
     fragments.forEach(f => {
-      const { fragment, start, stop, catchWord } = f;
-      markups.push({fragment, start, stop, catchword: catchWord});
+      const { fragment, start, stop, catchword } = f;
+      markups.push({fragment, start, stop, catchword});
     });
 
     const updatedTask = {

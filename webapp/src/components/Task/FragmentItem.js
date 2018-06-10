@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import classNames from "classnames";
 
 import './FragmentItem.css';
 
@@ -23,14 +22,14 @@ export class FragmentItem extends Component {
     fragment: "",
     start: "",
     stop: "",
-    catchWord: true
+    catchword: true
   };
 
   componentWillMount() {
     const { model } = this.props;
-    const { fragment, start, stop, catchWord } = model;
+    const { fragment, start, stop, catchword } = model;
     this.setState({
-      fragment, start, stop, catchWord
+      fragment, start, stop, catchword
     });
   }
 
@@ -59,7 +58,7 @@ export class FragmentItem extends Component {
     const { model } = this.props;
     const { value } = e.target;
     const boolValue = value === "true";
-    this.setState({ catchWord: boolValue });
+    this.setState({ catchword: boolValue });
     model.setCatchWord(boolValue);
   };
 
@@ -108,13 +107,13 @@ export class FragmentItem extends Component {
           <div onChange={this.onChangeCatchWord}>
             <div className="form-check form-check-inline">
               <label className="form-check-label">
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" id={`${'yesRadio'}-${model.id}`} value="true" />
+                <input className="form-check-input" checked={model.catchword === true} type="radio" name="inlineRadioOptions" id={`${'yesRadio'}-${model.id}`} value="true" />
                 Yes
               </label>
             </div>
             <div className="form-check form-check-inline">
               <label className="form-check-label">
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" id={`${'noRadio'}-${model.id}`} value="false" />
+                <input className="form-check-input" checked={model.catchword === false} type="radio" name="inlineRadioOptions" id={`${'noRadio'}-${model.id}`} value="false" />
                 No
               </label>
             </div>
