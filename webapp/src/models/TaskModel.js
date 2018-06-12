@@ -62,6 +62,22 @@ export class TaskModel extends BaseModel {
       this.tasks[index] = task;
     }
   }
+
+  @action
+  uploadAudio = async (task, file) => {
+    this.isLoading = true;
+    const formData = new FormData();
+    formData.append("file", file);
+    await call(`${this.endpoint}/${task.id}/uploadAudio`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'audio/vnd.wave'
+      },
+      body: formData
+    }, true);
+    this.isLoading = false;
+  }
 }
 
 const taskModel = new TaskModel('tasks', history);

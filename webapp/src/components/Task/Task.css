@@ -35,3 +35,24 @@ p > span {
 /*.form-wrapper {*/
     /*margin-bottom: 40px;*/
 /*}*/
+.file-upload {
+    margin-top: 8px;
+}
+input[type=file]{
+    position: absolute;
+    top: 0;
+    visibility: hidden
+}
+
+.inputFile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputFile:focus + label,
+.inputFile + label:hover {
+    background-color: red;
+}
