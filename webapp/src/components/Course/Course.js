@@ -172,7 +172,6 @@ class Course extends Component {
         {
           courseModel.isLoading && <PulseLoader className="spinner" color="#26A65B" size="16px" margin="4px"/>
         }
-        <p>ID: #{course.id}</p>
         <p>Title:
           {
           editTitleMode ?
