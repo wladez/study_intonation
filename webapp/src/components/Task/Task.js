@@ -17,7 +17,7 @@ class Task extends Component {
     text: "",
     instruction: "",
     fragments: [],
-    audio: {}
+    audio: []
   };
 
   async componentWillMount() {
@@ -29,7 +29,7 @@ class Task extends Component {
       instruction,
       fragments: markups ? markups.map(f => new FragmentModel(f)) : []
     });
-    // this.setState({ fragments: mockedFragments.map(f => new FragmentModel(f))});
+    this.fileNameMap = new Map();
   }
 
   toggleTextMode = () => {
@@ -101,6 +101,20 @@ class Task extends Component {
 
   };
 
+  addAudio = async (e) => {
+    e.preventDefault();
+    const { sampleTask } = taskModel;
+    const files = Array.from(e.target.files);
+    e.target.value = '';
+    files.forEach(file => this.fileNameMap.set(file.name, file));
+    const updatedFileList = Array.from(this.fileNameMap.values());
+    this.setState({
+      audio: [...updatedFileList],
+    });
+    await taskModel.uploadAudio(sampleTask, files[0]);
+  };
+
+
   renderFragmentForm = model => {
     return (
       <Fragment>
@@ -171,7 +185,14 @@ class Task extends Component {
 
         <button className="btn btn-success" onClick={this.addFragment}>Add fragment</button>
         <button className="btn btn-success" onClick={this.saveTask}>Save task</button>
-        <button className="btn btn-primary" onClick={this.addAudio}>Add audio</button>
+
+        <div className="file-upload">
+          <input id="file" type='file' onChange={ this.addAudio } />
+          <label className='file-upload btn btn-primary' for="file">Add audio</label>
+        </div>
+        {/*<div className="audio-controls">*/}
+          {/*<audio controls />*/}
+        {/*</div>*/}
       </div>
     );
   }
