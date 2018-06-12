@@ -191,12 +191,13 @@ class Task extends Component {
           <label className='file-upload btn btn-primary' for="file">Add audio</label>
         </div>
         {
-          this.state.audio.length &&
+          (this.state.audio[0] && this.state.audio[0].name.length) && (
             <div className="audio-controls">
               <audio controls>
                 <source src={this.state.audio[0].name} type="audio/mpeg" />
               </audio>
             </div>
+          )
         }
       </div>
     );
