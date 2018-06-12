@@ -23,11 +23,13 @@ class Task extends Component {
   async componentWillMount() {
     const { taskId } = this.props.match.params;
     await taskModel.fetchSample(taskId);
+    const audio = await taskModel.downloadAudio(taskModel.sampleTask);
     const { text, instruction, markups } = taskModel.sampleTask;
     this.setState({
       text,
       instruction,
-      fragments: markups ? markups.map(f => new FragmentModel(f)) : []
+      fragments: markups ? markups.map(f => new FragmentModel(f)) : [],
+      audio: [audio]
     });
     this.fileNameMap = new Map();
   }
@@ -143,8 +145,8 @@ class Task extends Component {
       editInstructionMode,
       text,
       instruction,
+      audio
     } = this.state;
-
     return (
       <div className="container">
         {
@@ -191,13 +193,8 @@ class Task extends Component {
           <label className='file-upload btn btn-primary' for="file">Add audio</label>
         </div>
         {
-          (this.state.audio[0] && this.state.audio[0].name.length) && (
-            <div className="audio-controls">
-              <audio controls>
-                <source src={this.state.audio[0].name} type="audio/mpeg" />
-              </audio>
-            </div>
-          )
+          audio[0] &&
+          <a href={`localhost:8000/tasks/${taskModel.sampleTask.id}/downloadAudio`}>{audio[0].name}</a>
         }
       </div>
     );

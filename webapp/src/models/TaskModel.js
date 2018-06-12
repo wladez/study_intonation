@@ -61,7 +61,17 @@ export class TaskModel extends BaseModel {
     if (index > -1) {
       this.tasks[index] = task;
     }
-  }
+  };
+
+  @action
+  downloadAudio = async (task) => {
+    this.isLoading = true;
+    const file = await call(`${this.endpoint}/${task.id}/downloadAudio`, {
+      method: 'GET'
+    }, true);
+    this.isLoading = false;
+    return file;
+  };
 
   @action
   uploadAudio = async (task, file) => {
@@ -70,9 +80,8 @@ export class TaskModel extends BaseModel {
     formData.append("file", file);
     await call(`${this.endpoint}/${task.id}/uploadAudio`, {
       method: 'POST',
-      credentials: 'same-origin',
       headers: {
-        'Content-Type': 'audio/vnd.wave'
+        'Content-Type': 'audio/x-wav'
       },
       body: formData
     }, true);
