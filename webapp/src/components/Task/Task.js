@@ -190,9 +190,14 @@ class Task extends Component {
           <input id="file" type='file' onChange={ this.addAudio } />
           <label className='file-upload btn btn-primary' for="file">Add audio</label>
         </div>
-        {/*<div className="audio-controls">*/}
-          {/*<audio controls />*/}
-        {/*</div>*/}
+        {
+          this.state.audio.length &&
+            <div className="audio-controls">
+              <audio controls>
+                <source src={this.state.audio[0].name} type="audio/mpeg" />
+              </audio>
+            </div>
+        }
       </div>
     );
   }
