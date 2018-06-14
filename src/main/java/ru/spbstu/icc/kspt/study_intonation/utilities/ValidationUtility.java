@@ -36,7 +36,7 @@ public final class ValidationUtility {
 
     public static boolean isValidAudio(final MultipartFile file) {
         return (file.getContentType().equals("audio/mpeg")
-                || file.getContentType().equals("audio/wave"));
+                || file.getContentType().equals("audio/wav"));
     }
 
     public static <T> Optional<T> get(final T o) {
