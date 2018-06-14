@@ -194,7 +194,7 @@ class Task extends Component {
         </div>
         {
           audio[0] &&
-          <a href={`localhost:8000/tasks/${taskModel.sampleTask.id}/downloadAudio`}>{audio[0].name}</a>
+          <a href={`localhost:8080/tasks/${taskModel.sampleTask.id}/downloadAudio`}>{audio[0].name}</a>
         }
       </div>
     );

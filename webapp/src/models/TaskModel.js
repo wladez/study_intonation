@@ -80,9 +80,6 @@ export class TaskModel extends BaseModel {
     formData.append("file", file);
     await call(`${this.endpoint}/${task.id}/uploadAudio`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'audio/x-wav'
-      },
       body: formData
     }, true);
     this.isLoading = false;
