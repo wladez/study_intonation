@@ -6,11 +6,6 @@ import './EntityTitle.css';
 
 @observer
 export class EntityTitle extends Component {
-
-  dialog = model => {
-    {this.props.addEntity()}
-  };
-
   render() {
     const { model, modalDialog } = this.props;
     return (

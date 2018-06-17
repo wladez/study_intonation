@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import history from './utils/history';
 
-import Routes from './Routes'; // eslint-disable-line;
+import Routes from './Routes';
 
 const render = Component => {
   ReactDOM.render(

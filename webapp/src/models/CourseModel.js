@@ -53,7 +53,7 @@ export class CourseModel extends BaseModel {
   @action
   addCourse = async (course) => {
     this.isLoading = true;
-    const courseId = await call(`${this.endpoint}`, {
+    await call(`${this.endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
