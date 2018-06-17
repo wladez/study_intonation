@@ -17,22 +17,26 @@ class Task extends Component {
     text: "",
     instruction: "",
     fragments: [],
-    audio: []
+    audio: [],
+    isValid: true
   };
 
   async componentWillMount() {
     const { taskId } = this.props.match.params;
+    await this.fetchAndUpdate(taskId);
+    this.fileNameMap = new Map();
+  }
+
+  fetchAndUpdate = async (taskId) => {
     await taskModel.fetchSample(taskId);
-    const audio = await taskModel.downloadAudio(taskModel.sampleTask);
     const { text, instruction, markups } = taskModel.sampleTask;
     this.setState({
       text,
       instruction,
       fragments: markups ? markups.map(f => new FragmentModel(f)) : [],
-      audio: [audio]
+      audio: [taskModel.audio]
     });
-    this.fileNameMap = new Map();
-  }
+  };
 
   toggleTextMode = () => {
     this.setState({ editTextMode: !this.state.editTextMode });
@@ -114,6 +118,7 @@ class Task extends Component {
       audio: [...updatedFileList],
     });
     await taskModel.uploadAudio(sampleTask, files[0]);
+    await this.fetchAndUpdate(sampleTask.id);
   };
 
 
@@ -193,8 +198,10 @@ class Task extends Component {
           <label className='file-upload btn btn-primary' for="file">Add audio</label>
         </div>
         {
-          audio[0] &&
-          <a href={`localhost:8080/tasks/${taskModel.sampleTask.id}/downloadAudio`}>{audio[0].name}</a>
+          (audio[0] && audio[0].status === 200) &&
+          <audio src={`http://localhost:8080/tasks/${taskModel.sampleTask.id}/downloadAudio`} controls>
+            Your browser does not support the audio element.
+          </audio>
         }
       </div>
     );

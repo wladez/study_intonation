@@ -6,6 +6,7 @@ import {BaseModel} from "./BaseModel";
 export class TaskModel extends BaseModel {
   @observable tasks = [];
   @observable sampleTask = {};
+  @observable audio = {};
   @observable isLoading = false;
 
   endpoint = '/tasks';
@@ -29,6 +30,7 @@ export class TaskModel extends BaseModel {
     this.sampleTask = await call(`${this.endpoint}/${taskId}`, {
       method: 'GET'
     });
+    this.audio = await this.downloadAudio(this.sampleTask);
     this.isLoading = false;
   };
 
@@ -65,11 +67,9 @@ export class TaskModel extends BaseModel {
 
   @action
   downloadAudio = async (task) => {
-    this.isLoading = true;
     const file = await call(`${this.endpoint}/${task.id}/downloadAudio`, {
       method: 'GET'
     }, true);
-    this.isLoading = false;
     return file;
   };
 

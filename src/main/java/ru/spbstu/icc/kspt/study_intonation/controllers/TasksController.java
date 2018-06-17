@@ -62,7 +62,11 @@ public class TasksController {
     @GetMapping(Methods.ID_PATTERN+Methods.DOWNLOAD_AUDIO)
     public ResponseEntity<Resource> downloadAudio(@PathVariable final Long id) {
         AbstractResource audioFile = tasksService.getAudioFile(id);
-
+        if (audioFile == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(null);
+        }
         return ResponseEntity.ok()
                              .contentType(MediaType.parseMediaType("audio/mpeg"))
                              .body(audioFile);
