@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './store/configureStore';
 
 
 import Common from './components/Common/component';
-import Home  from './components/Home';
+import Home from './components/Home/component';
 import Courses from "./components/Courses/Courses";
 import Course  from './components/Course/Course';
 import Lessons from './components/Lessons/Lessons';
@@ -17,7 +16,7 @@ import Task from './components/Task/Task';
 export class Routes extends Component {
   render() {
     return (
-        <Provider store={store}>
+        <Provider>
             <Router history={this.props.history}>
                 <Switch>
                     <Common>

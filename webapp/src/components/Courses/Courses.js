@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import SkyLight from 'react-skylight';
 import courseModel from "../../models/CourseModel";
 import '../Common/CollapsibleItem';
 import { CollapsibleItem } from "../Common/CollapsibleItem";

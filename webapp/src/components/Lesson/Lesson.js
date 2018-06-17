@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import classNames from "classnames";
 import SkyLight from 'react-skylight';
-import { isEmpty } from 'ramda';
 import { PulseLoader } from "halogenium";
 import lessonModel from '../../models/LessonModel';
 import { TaskItem } from "./TaskItem";

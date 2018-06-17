@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import taskModel from "../../models/TaskModel";
 import { EntityTitle } from "../Common/EntityTitle";
